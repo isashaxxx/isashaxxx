@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOODua - Конструктор футболок</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useRef } = React;
+
+        function MOODuaDesigner() {
+            const [shirtColor, setShirtColor] = useState("#14b8a6");
+            const [view, setView] = useState("front");
+            const [elements, setElements] = useState([]);
+            const [selectedElement, setSelectedElement] = useState(null);
+            const [textInput, setTextInput] = useState("");
+            const [fontSize, setFontSize] = useState(24);
+            const [textColor, setTextColor] = useState("#000000");
+            const fileInputRef = useRef(null);
+            const canvasRef = useRef(null);
+
+            // ============================================
+            // НАЛАШТУВАННЯ: Вставте URL ваших зображень
+            // ============================================
+            
+            const mockupImages = {
+                front: "images/tshirt-front.png",  // Шлях до переднього вигляду
+                back: "images/tshirt-back.png"     // Шлях до заднього вигляду
+            };
+
+            // Використовувати зображення футболок? (true/false)
+            const useMockupImages = true; // Змініть на false для простих кольорів
+
+            // Зона дизайну (налаштуйте під ваш макет)
+            const designArea = { 
+                top: 150,    // відстань від верху (px)
+                left: 100,   // відстань зліва (px)
+                width: 200,  // ширина (px)
+                height: 250  // висота (px)
+            };
+
+            // ============================================
+
+            const shirtColors = [
+                { name: "Бірюзовий", color: "#14b8a6" },
+                { name: "Білий", color: "#ffffff" },
+                { name: "Чорний", color: "#000000" },
+                { name: "Темно-синій", color: "#1e3a8a" },
+                { name: "Червоний", color: "#dc2626" },
+                { name: "Зелений", color: "#16a34a" },
+                { name: "Жовтий", color: "#facc15" },
+                { name: "Сірий", color: "#6b7280" },
+            ];
+
+            const addText = () => {
+                if (textInput.trim()) {
+                    setElements([...elements, {
+                        id: Date.now(),
+                        type: "text",
+                        content: textInput,
+                        x: designArea.left + 50,
+                        y: designArea.top + 100,
+                        fontSize: fontSize,
+                        color: textColor,
+                        rotation: 0,
+                    }]);
+                    setTextInput("");
+                }
+            };
+
+            const handleImageUpload = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        setElements([...elements, {
+                            id: Date.now(),
+                            type: "image",
+                            content: event.target.result,
+                            x: designArea.left + 25,
+                            y: designArea.top + 50,
+                            width: 150,
+                            height: 150,
+                            rotation: 0,
+                        }]);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            const deleteElement = (id) => {
+                setElements(elements.filter((el) => el.id !== id));
+                if (selectedElement?.id === id) setSelectedElement(null);
+            };
+
+            const updateElement = (id, updates) => {
+                setElements(elements.map((el) => (el.id === id ? { ...el, ...updates } : el)));
+            };
+
+            const moveElement = (id, direction) => {
+                const element = elements.find((el) => el.id === id);
+                if (!element) return;
+                const updates = {};
+                const moveAmount = 10;
+                if (direction === "up") updates.y = element.y - moveAmount;
+                if (direction === "down") updates.y = element.y + moveAmount;
+                if (direction === "left") updates.x = element.x - moveAmount;
+                if (direction === "right") updates.x = element.x + moveAmount;
+                updateElement(id, updates);
+            };
+
+            const saveDesign = () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = 400;
+                canvas.height = 500;
+                const ctx = canvas.getContext("2d");
+
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, 400, 500);
+
+                const drawElements = () => {
+                    elements.forEach((element) => {
+                        ctx.save();
+                        ctx.translate(element.x, element.y);
+                        ctx.rotate((element.rotation * Math.PI) / 180);
+                        if (element.type === "text") {
+                            ctx.font = `bold ${element.fontSize}px Arial`;
+                            ctx.fillStyle = element.color;
+                            ctx.textBaseline = "top";
+                            ctx.fillText(element.content, 0, 0);
+                        } else if (element.type === "image") {
+                            const img = new Image();
+                            img.src = element.content;
+                            ctx.drawImage(img, 0, 0, element.width, element.height);
+                        }
+                        ctx.restore();
+                    });
+                    canvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement("a");
+                        link.href = url;
+                        link.download = `moodua-${view}-${Date.now()}.png`;
+                        link.click();
+                        URL.revokeObjectURL(url);
+                    });
+                };
+
+                if (useMockupImages) {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous";
+                    img.src = mockupImages[view];
+                    img.onload = () => { ctx.drawImage(img, 0, 0, 400, 500); drawElements(); };
+                    img.onerror = () => { ctx.fillStyle = shirtColor; ctx.fillRect(80, 120, 240, 360); drawElements(); };
+                } else {
+                    ctx.fillStyle = shirtColor;
+                    ctx.fillRect(80, 120, 240, 360);
+                    drawElements();
+                }
+            };
+
+            return (
+                <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #e0f2f1, #b2ebf2)", padding: "20px" }}>
+                    <div style={{ maxWidth: "1400px", margin: "0 auto 30px" }}>
+                        <div style={{ background: "white", borderRadius: "20px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)", padding: "25px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "20px" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+                                <div style={{ width: "60px", height: "60px", background: "#14b8a6", borderRadius: "15px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "32px", fontWeight: "bold" }}>M</div>
+                                <div>
+                                    <h1 style={{ fontSize: "28px", color: "#1f2937", margin: 0 }}>MOODua</h1>
+                                    <p style={{ color: "#6b7280", fontSize: "14px", margin: 0 }}>Конструктор дизайну футболок</p>
+                                </div>
+                            </div>
+                            <div style={{ display: "flex", gap: "15px" }}>
+                                <button style={{ padding: "12px 24px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer", background: "#14b8a6", color: "white" }}>☎ 0800-123-456</button>
+                                <button style={{ padding: "12px 24px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer", background: "#f97316", color: "white" }}>💬 Чат</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style={{ maxWidth: "1400px", margin: "0 auto", display: "grid", gridTemplateColumns: "300px 1fr 300px", gap: "25px" }}>
+                        {/* Left */}
+                        <div style={{ background: "white", padding: "25px", borderRadius: "20px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}>
+                            <h2 style={{ marginBottom: "20px", color: "#1f2937" }}>З чого почати?</h2>
+                            <div onClick={() => fileInputRef.current?.click()} style={{ border: "2px dashed #d1d5db", padding: "30px", textAlign: "center", borderRadius: "15px", cursor: "pointer", marginBottom: "20px" }}>
+                                <div style={{ fontSize: "40px" }}>📤</div>
+                                <span style={{ fontWeight: "600", color: "#4b5563" }}>Завантажити</span>
+                            </div>
+                            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: "none" }} />
+
+                            <div style={{ border: "2px solid #e5e7eb", padding: "20px", borderRadius: "15px", marginBottom: "20px" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "15px" }}>
+                                    <span style={{ fontSize: "20px" }}>✏️</span>
+                                    <span style={{ fontWeight: "600" }}>Додати текст</span>
+                                </div>
+                                <input type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && addText()} placeholder="Текст..." style={{ width: "100%", padding: "10px", border: "1px solid #d1d5db", borderRadius: "8px", marginBottom: "10px" }} />
+                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "10px" }}>
+                                    <div><label style={{ fontSize: "12px", color: "#6b7280" }}>Розмір</label><input type="number" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} style={{ width: "100%", padding: "8px", border: "1px solid #d1d5db", borderRadius: "6px" }} min="12" max="72" /></div>
+                                    <div><label style={{ fontSize: "12px", color: "#6b7280" }}>Колір</label><input type="color" value={textColor} onChange={(e) => setTextColor(e.target.value)} style={{ width: "100%", height: "34px" }} /></div>
+                                </div>
+                                <button onClick={addText} style={{ width: "100%", background: "#14b8a6", color: "white", padding: "12px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>Додати</button>
+                            </div>
+                        </div>
+
+                        {/* Center */}
+                        <div style={{ background: "white", padding: "25px", borderRadius: "20px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}>
+                            <div style={{ display: "flex", gap: "10px", justifyContent: "center", marginBottom: "30px" }}>
+                                <button onClick={() => setView("front")} style={{ padding: "10px 30px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer", background: view === "front" ? "#14b8a6" : "#f3f4f6", color: view === "front" ? "white" : "#6b7280" }}>Передній</button>
+                                <button onClick={() => setView("back")} style={{ padding: "10px 30px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer", background: view === "back" ? "#14b8a6" : "#f3f4f6", color: view === "back" ? "white" : "#6b7280" }}>Задній</button>
+                            </div>
+
+                            <div ref={canvasRef} style={{ position: "relative", width: "400px", height: "500px", margin: "0 auto", background: "#fff" }}>
+                                {useMockupImages ? (
+                                    <img src={mockupImages[view]} alt="T-shirt" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "contain", pointerEvents: "none" }} onError={(e) => e.target.style.display = 'none'} />
+                                ) : (
+                                    <div style={{ position: "absolute", top: "120px", left: "80px", width: "240px", height: "360px", background: shirtColor, borderRadius: "10px" }} />
+                                )}
+                                <div style={{ position: "absolute", top: designArea.top, left: designArea.left, width: designArea.width, height: designArea.height, border: "2px dashed #d1d5db", background: "rgba(255,255,255,0.2)", pointerEvents: "none" }} />
+                                {elements.map((el) => (
+                                    <div key={el.id} onClick={() => setSelectedElement(el)} style={{ position: "absolute", left: el.x, top: el.y, transform: `rotate(${el.rotation}deg)`, cursor: "move", outline: selectedElement?.id === el.id ? "2px solid #14b8a6" : "none" }}>
+                                        {el.type === "text" ? <div style={{ fontSize: el.fontSize, color: el.color, fontWeight: "bold", whiteSpace: "nowrap" }}>{el.content}</div> : <img src={el.content} alt="" style={{ width: el.width, height: el.height, objectFit: "contain" }} />}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Right */}
+                        <div style={{ background: "white", padding: "25px", borderRadius: "20px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}>
+                            <h3 style={{ marginBottom: "20px" }}>Колір</h3>
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px", marginBottom: "25px" }}>
+                                {shirtColors.map((c) => <button key={c.color} onClick={() => setShirtColor(c.color)} style={{ aspectRatio: "1", border: shirtColor === c.color ? "3px solid #14b8a6" : "2px solid #e5e7eb", borderRadius: "10px", cursor: "pointer", background: c.color, transform: shirtColor === c.color ? "scale(1.1)" : "scale(1)" }} />)}
+                            </div>
+
+                            {selectedElement && (
+                                <div style={{ marginBottom: "25px", padding: "15px", background: "#f9fafb", borderRadius: "10px" }}>
+                                    <h3 style={{ marginBottom: "15px", fontSize: "16px" }}>Редагувати</h3>
+                                    <div style={{ marginBottom: "15px" }}>
+                                        <label style={{ fontSize: "14px", color: "#6b7280", marginBottom: "10px", display: "block" }}>Позиція</label>
+                                        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "5px" }}>
+                                            <div /><button onClick={() => moveElement(selectedElement.id, "up")} style={{ padding: "10px", background: "#f3f4f6", border: "none", borderRadius: "8px", cursor: "pointer" }}>↑</button><div />
+                                            <button onClick={() => moveElement(selectedElement.id, "left")} style={{ padding: "10px", background: "#f3f4f6", border: "none", borderRadius: "8px", cursor: "pointer" }}>←</button>
+                                            <button style={{ padding: "10px", background: "#d1d5db", border: "none", borderRadius: "8px" }}>⊕</button>
+                                            <button onClick={() => moveElement(selectedElement.id, "right")} style={{ padding: "10px", background: "#f3f4f6", border: "none", borderRadius: "8px", cursor: "pointer" }}>→</button>
+                                            <div /><button onClick={() => moveElement(selectedElement.id, "down")} style={{ padding: "10px", background: "#f3f4f6", border: "none", borderRadius: "8px", cursor: "pointer" }}>↓</button><div />
+                                        </div>
+                                    </div>
+                                    <div style={{ marginBottom: "15px" }}>
+                                        <label style={{ fontSize: "14px", color: "#6b7280", marginBottom: "5px", display: "block" }}>Поворот: {selectedElement.rotation}°</label>
+                                        <input type="range" min="-180" max="180" value={selectedElement.rotation} onChange={(e) => updateElement(selectedElement.id, { rotation: Number(e.target.value) })} style={{ width: "100%" }} />
+                                    </div>
+                                    {selectedElement.type === "image" && (
+                                        <div style={{ marginBottom: "15px" }}>
+                                            <label style={{ fontSize: "14px", color: "#6b7280", marginBottom: "10px", display: "block" }}>Розмір</label>
+                                            <div style={{ display: "flex", gap: "10px" }}>
+                                                <button onClick={() => updateElement(selectedElement.id, { width: Math.max(50, selectedElement.width - 10), height: Math.max(50, selectedElement.height - 10) })} style={{ flex: 1, background: "#f3f4f6", padding: "10px", border: "none", borderRadius: "8px", cursor: "pointer" }}>−</button>
+                                                <button onClick={() => updateElement(selectedElement.id, { width: Math.min(300, selectedElement.width + 10), height: Math.min(300, selectedElement.height + 10) })} style={{ flex: 1, background: "#f3f4f6", padding: "10px", border: "none", borderRadius: "8px", cursor: "pointer" }}>+</button>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <button onClick={() => deleteElement(selectedElement.id)} style={{ width: "100%", background: "#ef4444", color: "white", padding: "12px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>🗑️ Видалити</button>
+                                </div>
+                            )}
+
+                            <button onClick={saveDesign} style={{ width: "100%", background: "linear-gradient(135deg, #14b8a6, #06b6d4)", color: "white", padding: "15px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer", marginBottom: "10px" }}>💾 Зберегти</button>
+                            <button style={{ width: "100%", background: "#3b82f6", color: "white", padding: "15px", border: "none", borderRadius: "10px", fontWeight: "600", cursor: "pointer" }}>💰 Ціна</button>
+
+                            <div style={{ marginTop: "25px" }}>
+                                <h3 style={{ marginBottom: "15px", fontSize: "16px" }}>Елементи ({elements.length})</h3>
+                                {elements.length === 0 ? <div style={{ textAlign: "center", padding: "20px", color: "#9ca3af", fontSize: "14px" }}>Порожньо</div> : (
+                                    <div>{elements.map((el, i) => (
+                                        <div key={el.id} onClick={() => setSelectedElement(el)} style={{ padding: "12px", border: selectedElement?.id === el.id ? "2px solid #14b8a6" : "1px solid #e5e7eb", background: selectedElement?.id === el.id ? "#f0fdfa" : "white", borderRadius: "10px", marginBottom: "8px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                                                <span>{el.type === "text" ? "📝" : "🖼️"}</span>
+                                                <span style={{ fontSize: "14px", fontWeight: "500" }}>{el.type === "text" ? el.content.substring(0, 10) + "..." : "Зображення " + (i + 1)}</span>
+                                            </div>
+                                            <button onClick={(e) => { e.stopPropagation(); deleteElement(el.id); }} style={{ background: "none", border: "none", color: "#ef4444", cursor: "pointer", fontSize: "18px" }}>✕</button>
+                                        </div>
+                                    ))}</div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<MOODuaDesigner />, document.getElementById('root'));
+    </script>
+</body>
+</html>
