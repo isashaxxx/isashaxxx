@@ -1,7 +1,7 @@
 (function () {
   const scriptUrl = document.currentScript?.src || document.baseURI;
   const defaultBase = new URL('.', scriptUrl).href;
-  const buildVersion = '20260908-1130';
+  const buildVersion = '20260908-1145';
   const versionedUrl = (path, base) => {
     const url = new URL(path, base);
     url.searchParams.set('v', buildVersion);
@@ -129,10 +129,11 @@
           .moodua-seo-intro h1{font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-.03em;margin:0 0 16px;font-weight:700}
           .moodua-seo-intro-copy p{font-size:15px;line-height:1.6;color:#5e6d82;margin:0 0 20px;max-width:560px}
           .moodua-seo-intro-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:999px;background:#324158;color:#fff;font-weight:700;font-size:14px;text-decoration:none}
-          .moodua-seo-intro-stats{display:grid;gap:12px}
-          .moodua-seo-intro-stat{display:flex;align-items:center;gap:10px;padding:16px 20px;min-height:60px;box-sizing:border-box;border:1px solid #e3e7ec;border-radius:14px;background:#f0f2f5}
-          .moodua-seo-intro-stat strong{font-size:clamp(20px,2.2vw,26px);font-weight:800;letter-spacing:-.02em;color:#324158;white-space:nowrap}
-          .moodua-seo-intro-stat span{font-size:12.5px;color:#5e6d82;line-height:1.3}
+          .moodua-seo-intro-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+          .moodua-seo-intro-stat{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:16px;box-sizing:border-box;border:1px solid #e3e7ec;border-radius:14px;background:#f8f9fb}
+          .moodua-seo-intro-stat:last-child:nth-child(odd){grid-column:1 / -1;flex-direction:row;align-items:center;gap:10px}
+          .moodua-seo-intro-stat strong{font-size:clamp(20px,2vw,24px);font-weight:800;letter-spacing:-.02em;color:#324158;white-space:nowrap}
+          .moodua-seo-intro-stat span{font-size:12px;color:#5e6d82;line-height:1.3}
           @media (max-width:760px){.moodua-seo-intro{grid-template-columns:1fr}}
         `;
         document.head.append(introStyles);
