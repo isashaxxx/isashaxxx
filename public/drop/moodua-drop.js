@@ -5,18 +5,9 @@ const isMobileView = window.matchMedia('(max-width: 640px)').matches;
 const assetPath = (path) => root === document ? path : new URL(path, root.host.getAttribute('asset-base') || document.baseURI).href;
 const materialIcon = (name) => `<img class="material-icon" src="${assetPath(`assets/drop/icons/${name}.svg`)}" alt="">`;
 
-const storySlides = [
-  { code:'MINERAL', title:'Виварена футболка', description:'Щільна бавовна, oversize-крій та багатошаровий патч із характером.', material:'Бавовна 240 г', branding:'Багатошаровий патч', video:'assets/drop/video/mineral.mp4', color:'#91d5d7', dot:'#73c8c5' },
-  { code:'MANIFEST', title:'Футболка з кишенею', description:'Не просто логотип — функціональна деталь, що продовжує сенс бренду.', material:'Виварена бавовна', branding:'Кастомна кишеня', video:'assets/drop/video/manifest.mp4', color:'#ff805b', dot:'#ff754c' },
-  { code:'VELLURA', title:'Тепле поло', description:'Мʼяка форма, контрастний комір і графіка, яку хочеться роздивлятися.', material:'Футер 320 г', branding:'Комір і принт', video:'assets/drop/video/vellura.mp4', color:'#e8e1d4', dot:'#e4ddcf' },
-  { code:'VERVIE', title:'Худі з намистинами', description:'Обʼємний силует, сміливий принт і маленькі деталі, що створюють wow.', material:'Футер 350 г', branding:'Принт і намистини', video:'assets/drop/video/vervie.mp4', color:'#bce6d2', dot:'#b4decb' }
-];
-
 const storyEls = {
-  card: root.querySelector('#story-card'), visual: root.querySelector('#story-visual'), video: root.querySelector('#story-video'), videoToggle: root.querySelector('#story-video-toggle'), videoIcon: root.querySelector('#story-video-icon'), number: root.querySelector('#story-number'), code: root.querySelector('#story-code'), title: root.querySelector('#story-title'), description: root.querySelector('#story-description'), material: root.querySelector('#story-material'), branding: root.querySelector('#story-branding'), switcher: root.querySelector('#story-switcher')
+  video: root.querySelector('#story-video'), videoToggle: root.querySelector('#story-video-toggle'), videoIcon: root.querySelector('#story-video-icon')
 };
-let storyIndex = 0;
-let storyTimer;
 
 const PAUSE_ICON_PATH = 'M6 5h4v14H6zM14 5h4v14h-4z';
 const PLAY_ICON_PATH = 'M8 5v14l11-7z';
@@ -26,6 +17,7 @@ function setVideoIcon(playing) {
   storyEls.videoToggle.setAttribute('aria-label', playing ? 'Пауза відео' : 'Відтворити відео');
 }
 
+storyEls.video.src = assetPath('assets/drop/video/hero-loop.mp4');
 storyEls.video.addEventListener('play', () => setVideoIcon(true));
 storyEls.video.addEventListener('pause', () => setVideoIcon(false));
 
@@ -34,37 +26,8 @@ storyEls.videoToggle.addEventListener('click', () => {
   else storyEls.video.pause();
 });
 
-function renderStory(index) {
-  storyIndex = index;
-  const slide = storySlides[index];
-  storyEls.video.classList.add('changing');
-  window.setTimeout(() => {
-    storyEls.card.style.background = slide.color;
-    storyEls.video.src = assetPath(slide.video);
-    storyEls.video.setAttribute('aria-label', `${slide.title} ${slide.code}`);
-    storyEls.video.load();
-    if (!reducedMotion) storyEls.video.play().catch(() => {});
-    else setVideoIcon(false);
-    storyEls.number.textContent = String(index + 1).padStart(2, '0');
-    storyEls.code.textContent = slide.code;
-    storyEls.title.textContent = slide.title;
-    storyEls.description.textContent = slide.description;
-    storyEls.material.textContent = slide.material;
-    storyEls.branding.textContent = slide.branding;
-    storyEls.switcher.querySelectorAll('button').forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === index));
-    storyEls.video.classList.remove('changing');
-  }, reducedMotion ? 0 : 220);
-}
-
-storySlides.forEach((slide, index) => {
-  const button = document.createElement('button');
-  button.className = 'color-dot'; button.style.setProperty('--color', slide.dot);
-  button.setAttribute('aria-label', `${slide.title}, ${slide.code}`);
-  button.addEventListener('click', () => { window.clearInterval(storyTimer); renderStory(index); });
-  storyEls.switcher.append(button);
-});
-renderStory(0);
-if (!reducedMotion && !isMobileView) storyTimer = window.setInterval(() => renderStory((storyIndex + 1) % storySlides.length), 4500);
+if (!reducedMotion) storyEls.video.play().catch(() => {});
+else setVideoIcon(false);
 
 const catalogTrack = root.querySelector('#catalog-track');
 let catalogPaused = false;
