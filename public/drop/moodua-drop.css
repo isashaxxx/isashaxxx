@@ -342,33 +342,52 @@ h1 em, h2 em, h3 em, dialog h2 em {
   overflow: hidden;
 }
 
-.story-visual img {
+.story-visual video {
   max-height: 96%;
   max-width: 88%;
   width: auto;
-  object-fit: contain;
+  height: 100%;
+  border-radius: 18px;
+  object-fit: cover;
   object-position: bottom;
   filter: drop-shadow(0 20px 32px rgba(18, 30, 49, 0.1));
   transition: opacity 0.25s ease, transform 0.4s var(--ease);
+  background: rgba(18, 30, 49, 0.06);
 }
 
-.story-visual img.changing {
+.story-visual video.changing {
   opacity: 0;
   transform: translateY(16px) scale(0.97);
 }
 
-.story-visual.has-pair #story-image {
-  max-width: 48%;
-  transform: translateX(-10%);
+.story-video-toggle {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(18, 30, 49, 0.55);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
-.story-visual.has-pair #story-secondary {
-  max-width: 48%;
-  transform: translateX(10%);
+.story-video-toggle:hover {
+  background: rgba(18, 30, 49, 0.8);
+  transform: translateX(-50%) scale(1.06);
 }
 
-.story-visual #story-secondary[hidden] {
-  display: none;
+.story-video-toggle svg {
+  width: 18px;
+  height: 18px;
 }
 
 .story-info {
