@@ -128,7 +128,7 @@
           .moodua-seo-intro *{box-sizing:border-box}
           .moodua-seo-intro-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#f0f2f5;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#324158;width:max-content;margin:0 0 16px}
           .moodua-seo-intro h1{font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-.03em;margin:0 0 16px;font-weight:700}
-          .moodua-seo-intro-copy p{font-size:15px;line-height:1.6;color:#5e6d82;margin:0 0 20px;max-width:560px}
+          .moodua-seo-intro-copy p:not(.moodua-seo-intro-eyebrow){font-size:15px;line-height:1.6;color:#5e6d82;margin:0 0 20px;max-width:560px}
           .moodua-seo-intro-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:999px;background:#324158;color:#fff;font-weight:700;font-size:14px;text-decoration:none}
           .moodua-seo-intro-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
           .moodua-seo-intro-stat{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:16px;box-sizing:border-box;border:1px solid #e3e7ec;border-radius:14px;background:#f8f9fb}
