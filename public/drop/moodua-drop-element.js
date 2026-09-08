@@ -1,7 +1,7 @@
 (function () {
   const scriptUrl = document.currentScript?.src || document.baseURI;
   const defaultBase = new URL('.', scriptUrl).href;
-  const buildVersion = '20260908-1145';
+  const buildVersion = '20260908-1200';
   const versionedUrl = (path, base) => {
     const url = new URL(path, base);
     url.searchParams.set('v', buildVersion);
@@ -119,9 +119,10 @@
       const pageLang = (document.documentElement.lang || 'uk').slice(0, 2).toLowerCase();
       const seo = seoCopy[pageLang] || seoCopy.uk;
 
-      if (!document.getElementById('moodua-seo-intro-styles')) {
-        const introStyles = document.createElement('style');
+      {
+        const introStyles = document.getElementById('moodua-seo-intro-styles') || document.createElement('style');
         introStyles.id = 'moodua-seo-intro-styles';
+        if (!introStyles.isConnected) document.head.append(introStyles);
         introStyles.textContent = `
           .moodua-seo-intro{font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:1320px;margin:0 auto;padding:clamp(56px,7vw,96px) clamp(20px,5vw,64px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,0.8fr);gap:clamp(28px,4vw,56px);align-items:center;color:#324158;box-sizing:border-box}
           .moodua-seo-intro *{box-sizing:border-box}
@@ -136,7 +137,6 @@
           .moodua-seo-intro-stat span{font-size:12px;color:#5e6d82;line-height:1.3}
           @media (max-width:760px){.moodua-seo-intro{grid-template-columns:1fr}}
         `;
-        document.head.append(introStyles);
       }
 
       if (!this.querySelector('.moodua-seo-intro')) {
