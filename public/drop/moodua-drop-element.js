@@ -1,7 +1,7 @@
 (function () {
   const scriptUrl = document.currentScript?.src || document.baseURI;
   const defaultBase = new URL('.', scriptUrl).href;
-  const buildVersion = '20260910-0130';
+  const buildVersion = '20260910-0230';
   const versionedUrl = (path, base) => {
     const url = new URL(path, base);
     url.searchParams.set('v', buildVersion);
