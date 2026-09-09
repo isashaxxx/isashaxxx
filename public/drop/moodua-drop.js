@@ -1,5 +1,5 @@
 function initMoodDrop(root = document) {
-const { PRODUCTS, createItem, updateItem, duplicateItem, removeItem, summarizeCollection } = window.MoodDropData;
+const { PRODUCTS, createItem, updateItem, removeItem, summarizeCollection } = window.MoodDropData;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobileView = window.matchMedia('(max-width: 640px)').matches;
 const assetPath = (path) => root === document ? path : new URL(path, root.host.getAttribute('asset-base') || document.baseURI).href;
@@ -341,9 +341,8 @@ function renderCollection() {
   root.querySelector('#collection-total').textContent = `${items.length} ${positionsWord} · ${totalUnits} шт.`;
   items.forEach((item) => {
     const product = PRODUCTS[item.productId]; const row = document.createElement('article'); row.className = 'collection-item';
-    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit">${materialIcon('edit')}Редагувати</button><button data-action="duplicate">${materialIcon('content-copy')}Дублювати</button><button data-action="remove">${materialIcon('delete')}Видалити</button></div>`;
+    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit" aria-label="Редагувати ${product.name}" title="Редагувати">${materialIcon('edit')}</button><button data-action="remove" aria-label="Видалити ${product.name}" title="Видалити">${materialIcon('delete')}</button></div>`;
     row.querySelector('[data-action="edit"]').addEventListener('click', () => { activeId = item.id; showEditor(); root.querySelector('.editor-grid').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' }); });
-    row.querySelector('[data-action="duplicate"]').addEventListener('click', () => { items = duplicateItem(items, item.id); activeId = items.at(-1).id; renderEditor(); renderCollection(); });
     row.querySelector('[data-action="remove"]').addEventListener('click', () => removeItemById(item.id));
     list.append(row);
   });
