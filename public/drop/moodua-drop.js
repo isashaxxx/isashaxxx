@@ -16,8 +16,7 @@ originalCatalogCards.forEach((card, index) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'catalog-select';
-  button.innerHTML = materialIcon('add');
-  button.setAttribute('aria-label', 'Додати у колекцію');
+  button.textContent = 'Обрати';
   card.querySelector('.product-card-media').append(button);
 });
 const catalogCardsBefore = originalCatalogCards.map((card) => {
@@ -139,8 +138,7 @@ function syncSelectionUI() {
     const isInCollection = hasItem(card.dataset.product);
     const button = card.querySelector('.catalog-select');
     button.classList.toggle('selected', isInCollection);
-    button.innerHTML = materialIcon(isInCollection ? 'check' : 'add');
-    button.setAttribute('aria-label', isInCollection ? 'Прибрати з колекції' : 'Додати у колекцію');
+    button.innerHTML = isInCollection ? `${materialIcon('check')}Обрано` : 'Обрати';
     button.setAttribute('aria-pressed', String(isInCollection));
   });
   const count = items.length;

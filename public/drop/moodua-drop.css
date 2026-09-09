@@ -718,42 +718,46 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .catalog-select {
   position: absolute;
-  right: 14px;
-  top: 14px;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) translateY(6px);
   z-index: 4;
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: #ffffff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(18, 30, 49, 0.16);
+  gap: 8px;
+  min-height: 40px;
+  padding: 11px 24px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(4px);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(18, 30, 49, 0.18);
   opacity: 0;
   pointer-events: none;
   cursor: pointer;
-  transition: opacity 0.2s var(--ease), background-color 0.25s var(--ease), transform 0.2s var(--ease);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
 .product-card:hover .catalog-select,
 .catalog-select.selected {
   opacity: 1;
   pointer-events: auto;
-}
-
-.catalog-select:hover {
-  transform: scale(1.08);
+  transform: translateX(-50%) translateY(0);
 }
 
 .catalog-select .material-icon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 .catalog-select.selected {
   background: var(--ink);
+  color: #ffffff;
 }
 
 .catalog-select.selected .material-icon {
@@ -812,15 +816,15 @@ h1 em, h2 em, h3 em, dialog h2 em {
   gap: 20px;
   padding-right: 20px;
   font-size: clamp(20px, 2.6vw, 38px);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: #111111;
   white-space: nowrap;
 }
 
 .marquee-track i {
   font-style: normal;
-  color: var(--aqua);
+  color: #111111;
 }
 
 @keyframes marquee-scroll {
@@ -838,18 +842,19 @@ h1 em, h2 em, h3 em, dialog h2 em {
   max-width: 1080px;
   margin: 0 auto;
   font-size: clamp(26px, 3.8vw, 54px);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.03em;
+  text-align: center;
 }
 
 .statement-word {
-  color: rgba(50, 65, 88, 0.2);
+  color: rgba(17, 17, 17, 0.18);
   transition: color 0.5s var(--ease);
 }
 
 .statement-word.is-visible {
-  color: var(--ink);
+  color: #111111;
 }
 
 /* Newsletter */
@@ -1545,7 +1550,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  counter-reset: faq;
 }
 
 @media (max-width: 860px) {
@@ -1593,14 +1597,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   align-items: baseline;
   gap: 14px;
-}
-
-.faq-item summary > span:first-child::before {
-  counter-increment: faq;
-  content: counter(faq);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
 }
 
 .faq-icon {
