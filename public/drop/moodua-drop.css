@@ -7,7 +7,6 @@
 :root, :host {
   --ink: #111111;
   --ink-light: #2b2b2b;
-  --headline: #324158;
   --deep: #0b0b0b;
   --aqua: #2eb4b9;
   --aqua-hover: #269ca0;
@@ -105,7 +104,7 @@ img {
 h1, h2, h3, h4 {
   font-family: var(--font-sans);
   font-weight: 700;
-  color: var(--headline);
+  color: var(--ink);
   line-height: 1.05;
   letter-spacing: -0.035em;
 }
@@ -248,17 +247,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   padding-bottom: clamp(80px, 11vw, 160px);
 }
 
-.hero-copy .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
 .hero-copy h1 {
   font-size: clamp(54px, 6.4vw, 98px);
   line-height: 0.92;
@@ -293,7 +281,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(0deg, rgba(6, 12, 22, 0.82) 0%, rgba(6, 12, 22, 0.32) 42%, rgba(6, 12, 22, 0.05) 68%);
+  background: linear-gradient(0deg, rgba(6, 12, 22, 0.9) 0%, rgba(6, 12, 22, 0.5) 42%, rgba(6, 12, 22, 0.2) 68%, rgba(6, 12, 22, 0.32) 100%);
 }
 
 /* Customization showcase */

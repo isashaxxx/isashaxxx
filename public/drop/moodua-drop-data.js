@@ -5,39 +5,39 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   const PRODUCTS = {
     tee: {
-      name: 'Виварена футболка', code: 'MINERAL', image: 'assets/drop/cutouts/mineral.webp',
+      name: 'Футболка Make WOW', code: 'MINERAL', image: 'assets/drop/cutouts/mineral.webp',
       photo: 'assets/drop/constructor/mineral.webp',
       colors: [{ name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Молочний', hex: '#e9e4d9' }, { name: 'Корал', hex: '#f47b48' }],
-      materials: ['Щільна бавовна 240 г', 'Organic cotton 220 г'],
-      branding: ['Багатошаровий патч', 'Шовкодрук', 'Вишивка']
+      materials: ['Щільна двонитка 220-240 г/м²', 'Organic cotton 220 г'],
+      branding: ['Нашивка з напівпанами', 'Кольорове виварювання', 'Необроблений край']
     },
     pocketTee: {
-      name: 'Футболка з кишенею', code: 'MANIFEST', image: 'assets/drop/cutouts/manifest.webp',
+      name: 'Футболка Curiosity', code: 'MANIFEST', image: 'assets/drop/cutouts/manifest.webp',
       photo: 'assets/drop/constructor/manifest.webp',
       colors: [{ name: 'Бірюза', hex: '#53bfc0' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Молочний', hex: '#e9e4d9' }],
-      materials: ['Виварена бавовна 240 г', 'Щільна бавовна 260 г'],
-      branding: ['Кастомна кишеня', 'Комбінований друк', 'Нашивка']
+      materials: ['Щільна двонитка 220-240 г/м²', 'Щільна бавовна 260 г'],
+      branding: ['Кишенька з оксфорду', 'Контрастні зовнішні шви', 'Бирка з сублімацією']
     },
     polo: {
-      name: 'Тепле поло', code: 'VELLURA', image: 'assets/drop/vellura-front-cutout.webp',
+      name: 'Тепле поло Responsibility', code: 'VELLURA', image: 'assets/drop/vellura-front-cutout.webp',
       photo: 'assets/drop/constructor/vellura.webp',
       colors: [{ name: 'Молочний', hex: '#e9e4d9' }, { name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Графіт', hex: '#263b59' }],
-      materials: ['Футер 320 г', 'Трикотаж 280 г'],
-      branding: ['Кастомний комір', 'Вишивка', 'Принт на спині']
+      materials: ['Надщільна тринитка діагональ', 'Трикотаж 280 г'],
+      branding: ['Вельветові манжети', 'Килимова вишивка', 'Еко-шкіряна бирка']
     },
     hoodie: {
-      name: 'Худі', code: 'VERVIE', image: 'assets/drop/cutouts/vervie.webp',
+      name: 'Худі Weird is normal', code: 'VERVIE', image: 'assets/drop/cutouts/vervie.webp',
       photo: 'assets/drop/constructor/vervie.webp',
       colors: [{ name: 'Молочний', hex: '#e9e4d9' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Корал', hex: '#f47b48' }],
-      materials: ['Футер тринитка 350 г', 'Organic cotton 380 г'],
-      branding: ['Намистини та принт', 'Обʼємне тиснення', 'Вишивка']
+      materials: ['Тринитка з Peach effect', 'Organic cotton 380 г'],
+      branding: ['Намистини ручної роботи', 'Паф-друк і шовкографія', 'Вишивка на капюшоні']
     },
     embossedHoodie: {
-      name: 'Худі з тисненням', code: 'BARREL', image: 'assets/drop/cutouts/barrel.webp',
+      name: 'Світшот Taking risks', code: 'BARREL', image: 'assets/drop/cutouts/barrel.webp',
       photo: 'assets/drop/constructor/barrel.webp',
       colors: [{ name: 'Молочний', hex: '#e9e4d9' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Корал', hex: '#f47b48' }],
-      materials: ['Футер тринитка 380 г', 'Бавовна premium 400 г'],
-      branding: ['Обʼємне тиснення', 'Вишивка', 'Жакардова бірка'],
+      materials: ['Надщільна тринитка діагональ', 'Бавовна premium 400 г'],
+      branding: ['Контрастні манжети', 'Груба нашивка з вишивкою', 'Жакардова бірка'],
       palette: [
         { name: 'Молочний', hex: '#e8dfce' },
         { name: 'Графітовий', hex: '#4a4d4c' },
@@ -57,7 +57,7 @@
         { name: 'Тауп', hex: '#756e72' }
       ],
       configurator: {
-        detailLabel: 'Манжети та шнурки',
+        detailLabel: 'Манжети',
         baseVariants: {
           0: 'assets/drop/configurator/assets/hoodie-milk.jpg',
           7: 'assets/drop/configurator/assets/hoodie-caramel.jpg',

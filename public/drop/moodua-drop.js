@@ -124,6 +124,7 @@ function renderChips() {
       clear.addEventListener('click', clearCollection);
       box.append(clear);
     }
+    box.hidden = items.length === 0;
   });
 }
 
