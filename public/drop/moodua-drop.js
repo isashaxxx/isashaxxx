@@ -148,6 +148,8 @@ function syncSelectionUI() {
   const count = items.length;
   selectionCount.textContent = count ? `Обрано: ${count}` : 'Нічого не обрано';
   startButton.disabled = count === 0;
+  root.querySelector('#step-editor').disabled = count === 0;
+  root.querySelector('#step-results').disabled = count === 0;
   renderChips();
 }
 
@@ -210,6 +212,7 @@ function clearCollection() {
   syncSelectionUI();
   pickerPanel.hidden = false;
   editorPanel.hidden = true;
+  setStep(0);
   renderCollection();
 }
 
@@ -231,10 +234,21 @@ const editorChipsEl = root.querySelector('#editor-chips');
 const editorGridEl = root.querySelector('.editor-grid');
 const editorStepTitle = root.querySelector('#editor-step-title');
 
+const stepTabs = [root.querySelector('#step-picker'), root.querySelector('#step-editor'), root.querySelector('#step-results')];
+function setStep(index) {
+  stepTabs.forEach((tab, i) => {
+    tab.classList.toggle('active', i === index);
+    tab.setAttribute('aria-selected', String(i === index));
+  });
+  stepTabs[1].disabled = items.length === 0;
+  stepTabs[2].disabled = items.length === 0;
+}
+
 function showEditor() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
   editorChipsEl.hidden = false; editorGridEl.hidden = false;
   editorStepTitle.textContent = 'Налаштування виробу';
+  setStep(1);
   renderEditor(); renderCollection();
 }
 
@@ -242,12 +256,14 @@ function showResults() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
   editorChipsEl.hidden = true; editorGridEl.hidden = true;
   editorStepTitle.textContent = 'Ваша колекція';
+  setStep(2);
   renderCollection();
 }
 
 function goToPicker() {
   syncSelectionUI();
   pickerPanel.hidden = false; editorPanel.hidden = true;
+  setStep(0);
 }
 
 startButton.addEventListener('click', () => {
@@ -255,7 +271,9 @@ startButton.addEventListener('click', () => {
   showEditor();
 });
 
-root.querySelector('#step-back').addEventListener('click', goToPicker);
+root.querySelector('#step-picker').addEventListener('click', goToPicker);
+root.querySelector('#step-editor').addEventListener('click', () => { if (items.length) showEditor(); });
+root.querySelector('#step-results').addEventListener('click', () => { if (items.length) showResults(); });
 
 function optionButton(label, active, onClick, extraClass = '') {
   const button = document.createElement('button'); button.type = 'button'; button.className = `option ${extraClass}${active ? ' active' : ''}`; button.textContent = label; button.setAttribute('aria-pressed', active);
@@ -344,6 +362,7 @@ function removeItemById(id) {
   syncSelectionUI();
   if (!items.length) {
     activeId = null; pickerPanel.hidden = false; editorPanel.hidden = true;
+    setStep(0);
     renderCollection();
     return;
   }
