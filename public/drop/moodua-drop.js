@@ -17,7 +17,7 @@ originalCatalogCards.forEach((card, index) => {
   button.type = 'button';
   button.className = 'catalog-select';
   button.textContent = 'Обрати';
-  card.querySelector(':scope > div:last-of-type').append(button);
+  card.querySelector('.product-card-body').append(button);
 });
 const catalogCardsBefore = originalCatalogCards.map((card) => {
   const before = card.cloneNode(true);
@@ -35,10 +35,10 @@ catalogTrack.prepend(...catalogCardsBefore);
 catalogTrack.append(...catalogCardsAfter);
 
 catalogTrack.querySelectorAll('.product-card').forEach((card) => {
-  const img = card.querySelector(':scope > img');
-  const prevBtn = card.querySelector(':scope > .card-nav.prev');
-  const nextBtn = card.querySelector(':scope > .card-nav.next');
-  const dotsWrap = card.querySelector(':scope > .card-dots');
+  const img = card.querySelector('.product-card-media img');
+  const prevBtn = card.querySelector('.card-nav.prev');
+  const nextBtn = card.querySelector('.card-nav.next');
+  const dotsWrap = card.querySelector('.card-dots');
   if (!img || !prevBtn || !nextBtn || !dotsWrap) return;
   let gallery;
   try { gallery = JSON.parse(card.dataset.gallery || '[]'); } catch (e) { gallery = []; }
@@ -138,8 +138,6 @@ const selectionCount = root.querySelector('#selection-count');
 const startButton = root.querySelector('#start-config');
 const pickerPanel = root.querySelector('#builder-picker');
 const editorPanel = root.querySelector('#builder-editor');
-const progressEditorBtn = root.querySelector('#progress-editor');
-const progressSummaryBtn = root.querySelector('#progress-summary');
 let items = [];
 let activeId = null;
 
@@ -157,8 +155,6 @@ function syncSelectionUI() {
   const count = items.length;
   selectionCount.textContent = count ? `Обрано: ${count}` : 'Нічого не обрано';
   startButton.disabled = count === 0;
-  progressEditorBtn.disabled = count === 0;
-  progressSummaryBtn.disabled = count === 0;
   renderChips();
 }
 
@@ -221,7 +217,6 @@ function clearCollection() {
   syncSelectionUI();
   pickerPanel.hidden = false;
   editorPanel.hidden = true;
-  setProgressStep(0);
   renderCollection();
 }
 
@@ -239,10 +234,6 @@ catalogTrack.querySelectorAll('.catalog-select').forEach((button) => button.addE
   root.querySelector('#builder').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
 }));
 
-function setProgressStep(index) {
-  root.querySelectorAll('.builder-progress button').forEach((item, i) => item.classList.toggle('active', i === index));
-}
-
 const editorChipsEl = root.querySelector('#editor-chips');
 const editorGridEl = root.querySelector('.editor-grid');
 const editorStepTitle = root.querySelector('#editor-step-title');
@@ -251,7 +242,6 @@ function showEditor() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
   editorChipsEl.hidden = false; editorGridEl.hidden = false;
   editorStepTitle.textContent = 'Налаштування виробу';
-  setProgressStep(1);
   renderEditor(); renderCollection();
 }
 
@@ -259,14 +249,12 @@ function showResults() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
   editorChipsEl.hidden = true; editorGridEl.hidden = true;
   editorStepTitle.textContent = 'Ваша колекція';
-  setProgressStep(2);
   renderCollection();
 }
 
 function goToPicker() {
   syncSelectionUI();
   pickerPanel.hidden = false; editorPanel.hidden = true;
-  setProgressStep(0);
 }
 
 startButton.addEventListener('click', () => {
@@ -274,9 +262,7 @@ startButton.addEventListener('click', () => {
   showEditor();
 });
 
-root.querySelector('#progress-picker').addEventListener('click', goToPicker);
-root.querySelector('#progress-editor').addEventListener('click', () => { if (items.length) showEditor(); });
-root.querySelector('#progress-summary').addEventListener('click', () => { if (items.length) showResults(); });
+root.querySelector('#step-back').addEventListener('click', goToPicker);
 
 function optionButton(label, active, onClick, extraClass = '') {
   const button = document.createElement('button'); button.type = 'button'; button.className = `option ${extraClass}${active ? ' active' : ''}`; button.textContent = label; button.setAttribute('aria-pressed', active);
@@ -365,7 +351,6 @@ function removeItemById(id) {
   syncSelectionUI();
   if (!items.length) {
     activeId = null; pickerPanel.hidden = false; editorPanel.hidden = true;
-    setProgressStep(0);
     renderCollection();
     return;
   }
@@ -442,12 +427,50 @@ function renderCollection() {
 const summaryDialog = root.querySelector('#summary-dialog');
 function openSummary() {
   root.querySelector('#summary-text').textContent = summarizeCollection(items);
-  setProgressStep(2);
   summaryDialog.showModal();
 }
 root.querySelector('#open-summary').addEventListener('click', openSummary);
 root.querySelector('#dialog-close').addEventListener('click', () => summaryDialog.close());
 summaryDialog.addEventListener('click', (event) => { if (event.target === summaryDialog) summaryDialog.close(); });
+
+const statementEl = root.querySelector('#statement-text');
+if (statementEl) {
+  const words = statementEl.textContent.split(' ');
+  statementEl.textContent = '';
+  const wordEls = words.map((word, i) => {
+    const span = document.createElement('span');
+    span.className = 'statement-word';
+    span.textContent = word;
+    statementEl.append(span);
+    if (i < words.length - 1) statementEl.append(' ');
+    return span;
+  });
+  if (reducedMotion) {
+    wordEls.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    let statementTicking = false;
+    const updateStatement = () => {
+      statementTicking = false;
+      const line = window.innerHeight * 0.72;
+      wordEls.forEach((el) => el.classList.toggle('is-visible', el.getBoundingClientRect().top < line));
+    };
+    const queueStatement = () => {
+      if (statementTicking) return;
+      statementTicking = true;
+      window.requestAnimationFrame(updateStatement);
+    };
+    window.addEventListener('scroll', queueStatement, { passive: true });
+    window.addEventListener('resize', queueStatement);
+    window.requestAnimationFrame(() => window.requestAnimationFrame(updateStatement));
+  }
+}
+
+const newsletterForm = root.querySelector('#newsletter-form');
+newsletterForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  root.querySelector('#newsletter-note').hidden = false;
+  newsletterForm.reset();
+});
 
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); } }), { threshold: .12 });
 root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });

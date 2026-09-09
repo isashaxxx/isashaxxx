@@ -1,7 +1,7 @@
 (function () {
   const scriptUrl = document.currentScript?.src || document.baseURI;
   const defaultBase = new URL('.', scriptUrl).href;
-  const buildVersion = '20260909-1700';
+  const buildVersion = '20260909-1740';
   const versionedUrl = (path, base) => {
     const url = new URL(path, base);
     url.searchParams.set('v', buildVersion);
@@ -272,11 +272,11 @@
           if (src) image.setAttribute('src', new URL(src, assetBase).href);
         });
 
-        const heroSection = main.querySelector('.hero');
-        if (heroSection) {
+        const seoAnchor = main.querySelector('.statement') || main.querySelector('.hero');
+        if (seoAnchor) {
           const seoSlot = source.createElement('slot');
           seoSlot.setAttribute('name', 'moodua-seo-intro');
-          heroSection.insertAdjacentElement('afterend', seoSlot);
+          seoAnchor.insertAdjacentElement('afterend', seoSlot);
         }
 
         const css = rawCss
