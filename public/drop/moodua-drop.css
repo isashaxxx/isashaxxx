@@ -142,12 +142,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
   white-space: nowrap;
 }
 
-.button:hover {
-  transform: translateY(-2px);
-}
-
 .button:active {
-  transform: translateY(0) scale(0.98);
+  transform: scale(0.98);
 }
 
 .button-dark {
@@ -156,20 +152,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   box-shadow: 0 4px 16px rgba(17, 17, 17, 0.14);
 }
 
-.button-dark:hover {
-  background: var(--ink-light);
-  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.22);
-}
-
 .button-light {
   background: #ffffff;
   color: var(--ink);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-}
-
-.button-light:hover {
-  background: #fafafa;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
 }
 
 .button-accent {
@@ -178,9 +164,16 @@ h1 em, h2 em, h3 em, dialog h2 em {
   box-shadow: 0 4px 16px rgba(46, 180, 185, 0.3);
 }
 
-.button-accent:hover {
-  background: var(--aqua-hover);
-  box-shadow: 0 8px 24px rgba(46, 180, 185, 0.42);
+@media (hover: hover) and (pointer: fine) {
+  .button-dark:hover {
+    background: var(--ink-light);
+  }
+  .button-light:hover {
+    background: #fafafa;
+  }
+  .button-accent:hover {
+    background: var(--aqua-hover);
+  }
 }
 
 .button:disabled {
@@ -255,6 +248,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   gap: 20px;
   max-width: 540px;
   padding-bottom: clamp(80px, 11vw, 160px);
+}
+
+.hero-eyebrow {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .hero-copy h1 {
@@ -408,15 +405,15 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
-.catalog-actions button:hover {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: #ffffff;
-  transform: scale(1.05);
-}
-
-.catalog-actions button:hover .material-icon {
-  filter: brightness(0) invert(1);
+@media (hover: hover) and (pointer: fine) {
+  .catalog-actions button:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #ffffff;
+  }
+  .catalog-actions button:hover .material-icon {
+    filter: brightness(0) invert(1);
+  }
 }
 
 .catalog-track {
@@ -463,8 +460,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: transform 0.5s var(--ease);
 }
 
-.product-card:hover .product-card-media img {
-  transform: scale(1.04);
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .product-card-media img {
+    transform: scale(1.04);
+  }
 }
 
 .product-card-badge {
@@ -514,14 +513,14 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .card-nav.prev { left: 12px; }
 .card-nav.next { right: 12px; }
 
-.product-card:hover .card-nav {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.card-nav:hover {
-  background: rgba(17, 17, 17, 0.75);
-  transform: translateY(-50%) scale(1.08);
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .card-nav {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .card-nav:hover {
+    background: rgba(17, 17, 17, 0.75);
+  }
 }
 
 .catalog-select {
@@ -756,8 +755,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: background-color 0.2s var(--ease);
 }
 
-.newsletter-submit:hover {
-  background: #ececec;
+@media (hover: hover) and (pointer: fine) {
+  .newsletter-submit:hover {
+    background: #ececec;
+  }
 }
 
 .newsletter-note {
@@ -833,6 +834,12 @@ h1 em, h2 em, h3 em, dialog h2 em {
   cursor: not-allowed;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .builder-step:not(.active):not(:disabled):hover {
+    color: var(--ink);
+  }
+}
+
 @media (max-width: 420px) {
   .builder-step {
     padding: 10px 6px;
@@ -893,7 +900,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .charity-copy h2 {
-  font-size: clamp(28px, 3.6vw, 46px);
+  font-size: clamp(30px, 4vw, 58px);
   line-height: 1.04;
   letter-spacing: -0.03em;
 }
@@ -987,8 +994,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
-.chip:hover {
-  border-color: var(--line-dark);
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    border-color: var(--line-dark);
+  }
 }
 
 .chip.active {
@@ -1016,8 +1025,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   filter: brightness(0) invert(1);
 }
 
-.chip-remove:hover {
-  background: var(--coral);
+@media (hover: hover) and (pointer: fine) {
+  .chip-remove:hover {
+    background: var(--coral);
+  }
 }
 
 .chip-clear {
@@ -1027,9 +1038,11 @@ h1 em, h2 em, h3 em, dialog h2 em {
   font-weight: 700;
 }
 
-.chip-clear:hover {
-  background: var(--coral);
-  border-color: transparent;
+@media (hover: hover) and (pointer: fine) {
+  .chip-clear:hover {
+    background: var(--coral);
+    border-color: transparent;
+  }
 }
 
 .product-picker {
@@ -1060,12 +1073,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
-.picker-card:hover .picker-card-media {
-  border-color: var(--line-dark);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
-}
-
 .picker-card.selected .picker-card-media {
   border-color: var(--aqua);
   box-shadow: 0 0 0 2px var(--aqua);
@@ -1076,11 +1083,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   aspect-ratio: 3 / 4;
   object-fit: contain;
   object-position: center bottom;
-  transition: transform 0.4s var(--ease);
-}
-
-.picker-card:hover img {
-  transform: scale(1.03);
 }
 
 .picker-card-overlay {
@@ -1095,9 +1097,23 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: opacity 0.25s var(--ease);
 }
 
-.picker-card:hover .picker-card-overlay,
 .picker-card.selected .picker-card-overlay {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .picker-card:hover .picker-card-media {
+    border-color: var(--line-dark);
+  }
+  .picker-card:hover .picker-card-overlay {
+    opacity: 1;
+  }
+}
+
+@media (pointer: coarse) {
+  .picker-card-overlay {
+    opacity: 0.9;
+  }
 }
 
 .picker-card-remove {
@@ -1239,9 +1255,11 @@ h1 em, h2 em, h3 em, dialog h2 em {
   cursor: pointer;
 }
 
-.text-button:hover {
-  background: #ffffff;
-  border-color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .text-button:hover {
+    background: #ffffff;
+    border-color: var(--ink);
+  }
 }
 
 .editor-controls fieldset {
@@ -1283,8 +1301,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: all 0.2s var(--ease);
 }
 
-.option:hover {
-  border-color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .option:hover {
+    border-color: var(--ink);
+  }
 }
 
 .option.active {
@@ -1304,8 +1324,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
-.color-options .option:hover {
-  transform: scale(1.08);
+@media (hover: hover) and (pointer: fine) {
+  .color-options .option:hover {
+    filter: brightness(0.92);
+  }
 }
 
 .color-options .option.active {
@@ -1348,8 +1370,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: background 0.15s;
 }
 
-.quantity-stepper button:hover {
-  background: var(--mist);
+@media (hover: hover) and (pointer: fine) {
+  .quantity-stepper button:hover {
+    background: var(--mist);
+  }
 }
 
 .quantity input {
@@ -1420,10 +1444,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
-.collection-item:hover {
-  border-color: var(--line-dark);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .collection-item:hover {
+    border-color: var(--line-dark);
+  }
 }
 
 .collection-item > img {
@@ -1466,23 +1490,24 @@ h1 em, h2 em, h3 em, dialog h2 em {
   cursor: pointer;
 }
 
-.item-actions button:hover {
-  background: var(--ink);
-  color: #ffffff;
-}
-
-.item-actions button:hover .material-icon {
-  filter: brightness(0) invert(1);
-}
-
-.item-actions button[data-action="remove"]:hover {
-  background: var(--coral);
+@media (hover: hover) and (pointer: fine) {
+  .item-actions button:hover {
+    background: var(--ink);
+    color: #ffffff;
+  }
+  .item-actions button:hover .material-icon {
+    filter: brightness(0) invert(1);
+  }
+  .item-actions button[data-action="remove"]:hover {
+    background: var(--coral);
+  }
 }
 
 /* FAQ Section */
 .faq {
-  background: #ffffff;
+  background: var(--paper);
   padding-top: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(40px, 5vw, 64px);
 }
 
 .faq-shell {
@@ -1533,6 +1558,12 @@ h1 em, h2 em, h3 em, dialog h2 em {
   background: #ffffff;
   border-color: var(--aqua);
   box-shadow: 0 16px 32px -12px rgba(59, 185, 190, 0.28);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq-item:not([open]):hover {
+    background: var(--line);
+  }
 }
 
 .faq-item summary {
@@ -1660,8 +1691,10 @@ dialog pre {
   transition: background 0.2s;
 }
 
-.dialog-close:hover {
-  background: var(--line);
+@media (hover: hover) and (pointer: fine) {
+  .dialog-close:hover {
+    background: var(--line);
+  }
 }
 
 .dialog-note {
@@ -1717,6 +1750,13 @@ dialog pre {
   .hero {
     min-height: 0;
     padding: 100px 16px 32px;
+    background: #0b0b0b;
+  }
+  .hero-photo {
+    display: none;
+  }
+  .hero-shade {
+    display: none;
   }
   .hero-copy {
     padding-bottom: 0;
@@ -1807,7 +1847,12 @@ dialog pre {
   .item-actions {
     grid-column: 1 / -1;
     margin-top: 6px;
-    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .item-actions button {
+    flex: 1;
+    padding: 8px 6px;
+    font-size: 10px;
   }
 }
 
