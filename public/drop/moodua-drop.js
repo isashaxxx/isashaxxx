@@ -5,30 +5,6 @@ const isMobileView = window.matchMedia('(max-width: 640px)').matches;
 const assetPath = (path) => root === document ? path : new URL(path, root.host.getAttribute('asset-base') || document.baseURI).href;
 const materialIcon = (name) => `<img class="material-icon" src="${assetPath(`assets/drop/icons/${name}.svg`)}" alt="">`;
 
-const storyEls = {
-  video: root.querySelector('#story-video'), videoToggle: root.querySelector('#story-video-toggle'), videoIcon: root.querySelector('#story-video-icon')
-};
-
-const PAUSE_ICON_PATH = 'M6 5h4v14H6zM14 5h4v14h-4z';
-const PLAY_ICON_PATH = 'M8 5v14l11-7z';
-
-function setVideoIcon(playing) {
-  storyEls.videoIcon.setAttribute('d', playing ? PAUSE_ICON_PATH : PLAY_ICON_PATH);
-  storyEls.videoToggle.setAttribute('aria-label', playing ? 'Пауза відео' : 'Відтворити відео');
-}
-
-storyEls.video.src = assetPath('assets/drop/video/hero-loop.mp4');
-storyEls.video.addEventListener('play', () => setVideoIcon(true));
-storyEls.video.addEventListener('pause', () => setVideoIcon(false));
-
-storyEls.videoToggle.addEventListener('click', () => {
-  if (storyEls.video.paused) storyEls.video.play().catch(() => {});
-  else storyEls.video.pause();
-});
-
-if (!reducedMotion) storyEls.video.play().catch(() => {});
-else setVideoIcon(false);
-
 const catalogTrack = root.querySelector('#catalog-track');
 let catalogPaused = false;
 let catalogVisible = false;
