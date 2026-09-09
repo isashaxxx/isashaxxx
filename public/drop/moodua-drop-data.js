@@ -3,8 +3,6 @@
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.MoodDropData = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
-  const SIZES = ['S', 'M', 'L', 'XL'];
-
   const PRODUCTS = {
     tee: {
       name: 'Виварена футболка', code: 'MINERAL', image: 'assets/drop/cutouts/mineral.webp',
@@ -118,7 +116,6 @@
         color: product.palette[0].name,
         material: cfg.materials[0].name,
         branding: cfg.prints[0].name,
-        sizes: [...SIZES],
         quantity: 50
       };
     }
@@ -127,7 +124,6 @@
       color: product.colors[0].name,
       material: product.materials[0],
       branding: product.branding[0],
-      sizes: [...SIZES],
       quantity: 50
     };
   }
@@ -145,12 +141,9 @@
 
   function summarizeCollection(items) {
     const total = items.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-    const list = items.map((item) => {
-      const sizes = (item.sizes || []).join('/');
-      return `${PRODUCTS[item.productId].name} — ${item.color}, ${item.material}, ${item.branding}, розміри ${sizes}, ${item.quantity} шт.`;
-    }).join('\n');
+    const list = items.map((item) => `${PRODUCTS[item.productId].name} — ${item.color}, ${item.material}, ${item.branding}, ${item.quantity} шт.`).join('\n');
     return `${items.length} вироби · ${total} одиниць\n${list}`;
   }
 
-  return { PRODUCTS, SIZES, createItem, updateItem, duplicateItem, removeItem, summarizeCollection };
+  return { PRODUCTS, createItem, updateItem, duplicateItem, removeItem, summarizeCollection };
 });

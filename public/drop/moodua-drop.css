@@ -456,7 +456,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Section 02 · THE DROP (Catalog) */
 .catalog {
-  background: var(--mist);
+  background: var(--paper);
   padding-left: 0;
   padding-right: 0;
 }
@@ -1026,10 +1026,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .builder-shell {
-  background: #fafafa;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   max-width: 1400px;
   margin: 0 auto;
   overflow: hidden;
@@ -1376,27 +1376,9 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .option.active {
-  background: #3bb9be;
-  border-color: #3bb9be;
+  background: var(--aqua);
+  border-color: var(--aqua);
   color: #ffffff;
-}
-
-.size-options .option {
-  min-width: 46px;
-  padding: 11px 14px;
-  border-radius: var(--radius-sm);
-  text-align: center;
-  background: var(--mist);
-  border-color: transparent;
-  font-weight: 700;
-}
-
-.size-options .option:hover {
-  border-color: var(--ink);
-}
-
-.size-options .option.active {
-  border-color: #3bb9be;
 }
 
 .color-options .option {
@@ -1415,7 +1397,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .color-options .option.active {
-  box-shadow: 0 0 0 2.5px #3bb9be;
+  box-shadow: 0 0 0 2.5px var(--aqua);
   transform: scale(1.1);
 }
 
@@ -1481,7 +1463,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 /* Collection Summary Step */
 .collection-list-wrap {
   padding: clamp(32px, 4vw, 54px);
-  background: #fafafa;
+  background: var(--paper);
   border-top: 1px solid var(--line);
 }
 
@@ -1523,13 +1505,20 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.collection-item:hover {
+  border-color: var(--line-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .collection-item > img {
   width: 74px;
   height: 74px;
   object-fit: contain;
-  background: #f4f5f6;
+  background: var(--mist);
   border-radius: var(--radius-sm);
   padding: 6px;
 }
@@ -1556,18 +1545,26 @@ h1 em, h2 em, h3 em, dialog h2 em {
   gap: 6px;
   padding: 8px 14px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--line);
-  background: #ffffff;
+  border: 1px solid transparent;
+  background: var(--mist);
   font-size: 11px;
   font-weight: 700;
   color: var(--ink);
-  transition: all 0.2s;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
   cursor: pointer;
 }
 
 .item-actions button:hover {
-  border-color: var(--ink);
-  background: var(--mist);
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.item-actions button:hover .material-icon {
+  filter: brightness(0) invert(1);
+}
+
+.item-actions button[data-action="remove"]:hover {
+  background: var(--coral);
 }
 
 /* FAQ Section */
@@ -1622,7 +1619,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .faq-item[open] {
   background: #ffffff;
-  border-color: #3bb9be;
+  border-color: var(--aqua);
   box-shadow: 0 16px 32px -12px rgba(59, 185, 190, 0.28);
 }
 
@@ -1682,7 +1679,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .faq-item[open] .faq-icon {
-  background: #3bb9be;
+  background: var(--aqua);
   transform: rotate(45deg);
 }
 

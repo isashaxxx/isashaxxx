@@ -1,5 +1,5 @@
 function initMoodDrop(root = document) {
-const { PRODUCTS, SIZES, createItem, updateItem, duplicateItem, removeItem, summarizeCollection } = window.MoodDropData;
+const { PRODUCTS, createItem, updateItem, duplicateItem, removeItem, summarizeCollection } = window.MoodDropData;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobileView = window.matchMedia('(max-width: 640px)').matches;
 const assetPath = (path) => root === document ? path : new URL(path, root.host.getAttribute('asset-base') || document.baseURI).href;
@@ -370,26 +370,12 @@ function removeItemById(id) {
   renderEditor(); renderCollection();
 }
 
-function renderSizes(item) {
-  const box = root.querySelector('#size-options');
-  box.innerHTML = '';
-  SIZES.forEach((size) => {
-    const active = item.sizes.includes(size);
-    box.append(optionButton(size, active, () => {
-      const next = active ? item.sizes.filter((entry) => entry !== size) : [...item.sizes, size];
-      if (!next.length) return;
-      updateActive({ sizes: SIZES.filter((entry) => next.includes(entry)) });
-    }, 'size'));
-  });
-}
-
 function renderEditor() {
   const item = items.find((entry) => entry.id === activeId); if (!item) return;
   const product = PRODUCTS[item.productId];
   renderChips();
   root.querySelector('#editor-image').alt = `Попередній вигляд: ${product.name}`;
   root.querySelector('#preview-code').textContent = product.code;
-  renderSizes(item);
 
   if (product.configurator) {
     renderBarrelControls(item, product);
@@ -428,7 +414,7 @@ function renderCollection() {
   root.querySelector('#collection-total').textContent = `${items.length} позицій · ${totalUnits} шт.`;
   items.forEach((item) => {
     const product = PRODUCTS[item.productId]; const row = document.createElement('article'); row.className = 'collection-item';
-    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${(item.sizes || []).join('/')} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit">${materialIcon('edit')}Редагувати</button><button data-action="duplicate">${materialIcon('content-copy')}Дублювати</button><button data-action="remove">${materialIcon('delete')}Видалити</button></div>`;
+    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit">${materialIcon('edit')}Редагувати</button><button data-action="duplicate">${materialIcon('content-copy')}Дублювати</button><button data-action="remove">${materialIcon('delete')}Видалити</button></div>`;
     row.querySelector('[data-action="edit"]').addEventListener('click', () => { activeId = item.id; renderEditor(); root.querySelector('.editor-grid').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' }); });
     row.querySelector('[data-action="duplicate"]').addEventListener('click', () => { items = duplicateItem(items, item.id); activeId = items.at(-1).id; renderEditor(); renderCollection(); });
     row.querySelector('[data-action="remove"]').addEventListener('click', () => removeItemById(item.id));
