@@ -485,7 +485,7 @@ newsletterForm.addEventListener('submit', (event) => {
 });
 
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); } }), { threshold: .12 });
-root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
+root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.charity-card').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
 
 root.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListener('click', (event) => {
   const target = root.querySelector(link.getAttribute('href'));

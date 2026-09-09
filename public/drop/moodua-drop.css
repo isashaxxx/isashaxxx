@@ -929,6 +929,80 @@ h1 em, h2 em, h3 em, dialog h2 em {
   cursor: not-allowed;
 }
 
+/* Charity */
+.charity {
+  background: #ffffff;
+}
+
+.charity-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  padding: clamp(32px, 5vw, 64px);
+  border-radius: var(--radius-lg);
+  background: var(--mist);
+}
+
+.charity-figure {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  max-width: 260px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.charity-icon {
+  position: absolute;
+  width: 34%;
+  height: 34%;
+  top: 18%;
+  color: var(--coral);
+  opacity: 0.85;
+}
+
+.charity-percent {
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.charity-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.charity-copy h2 {
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.charity-copy p:not(.eyebrow) {
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 560px;
+}
+
+@media (max-width: 760px) {
+  .charity-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .charity-copy {
+    align-items: center;
+  }
+}
+
 /* Section 03 · YOUR COLLECTION (Builder) */
 .builder-section {
   background: #ffffff;
