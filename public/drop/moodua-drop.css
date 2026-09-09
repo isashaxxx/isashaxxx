@@ -537,6 +537,23 @@ h1 em, h2 em, h3 em, dialog h2 em {
   transform: scale(1.06);
 }
 
+.product-card.photo > img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: none;
+}
+
+.product-card.photo > span {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+}
+
 .product-card div {
   margin-top: auto;
   z-index: 3;
