@@ -10,7 +10,7 @@ let catalogPaused = false;
 let catalogVisible = false;
 let catalogNormalizeTimer;
 const originalCatalogCards = [...catalogTrack.children];
-const catalogProductIds = ['longsleeve', 'tee', 'polo', 'pocketTee', 'hoodie', 'embossedHoodie'];
+const catalogProductIds = ['tee', 'polo', 'pocketTee', 'hoodie', 'embossedHoodie'];
 originalCatalogCards.forEach((card, index) => {
   card.dataset.product = catalogProductIds[index];
   const button = document.createElement('button');
@@ -92,20 +92,38 @@ function queueCatalogNormalize() {
 }
 catalogTrack.addEventListener('scroll', queueCatalogNormalize, { passive: true });
 function cardStep() { return (catalogTrack.querySelector('.product-card')?.offsetWidth || 390) + 16; }
+let catalogManualResume;
+function pauseCatalogManually() {
+  catalogPaused = true;
+  window.clearTimeout(catalogManualResume);
+  catalogManualResume = window.setTimeout(() => { catalogPaused = false; }, 1600);
+}
 function scrollCatalog(direction = 1) {
+  pauseCatalogManually();
   catalogTrack.scrollBy({ left: cardStep() * direction, behavior: reducedMotion ? 'auto' : 'smooth' });
 }
 root.querySelector('#catalog-next').addEventListener('click', () => scrollCatalog(1));
 root.querySelector('#catalog-prev').addEventListener('click', () => scrollCatalog(-1));
 ['pointerenter','focusin'].forEach((type) => catalogTrack.addEventListener(type, () => { catalogPaused = true; }));
 ['pointerleave','focusout'].forEach((type) => catalogTrack.addEventListener(type, () => { catalogPaused = false; }));
-let catalogTouchResume;
-catalogTrack.addEventListener('touchstart', () => { catalogPaused = true; window.clearTimeout(catalogTouchResume); }, { passive: true });
-catalogTrack.addEventListener('touchend', () => { catalogTouchResume = window.setTimeout(() => { catalogPaused = false; }, 1500); }, { passive: true });
-let catalogTimer;
+catalogTrack.addEventListener('touchstart', () => { catalogPaused = true; window.clearTimeout(catalogManualResume); }, { passive: true });
+catalogTrack.addEventListener('touchend', () => { catalogManualResume = window.setTimeout(() => { catalogPaused = false; }, 1500); }, { passive: true });
 const catalogObserver = new IntersectionObserver(([entry]) => { catalogVisible = entry.isIntersecting; }, { threshold: .2 });
 catalogObserver.observe(catalogTrack);
-if (!reducedMotion && !isMobileView) catalogTimer = window.setInterval(() => { if (!catalogPaused && catalogVisible) scrollCatalog(1); }, 4200);
+
+const CATALOG_AUTO_SPEED = 34;
+let catalogAutoTs = null;
+function catalogAutoTick(ts) {
+  if (catalogAutoTs === null) catalogAutoTs = ts;
+  const dt = Math.min((ts - catalogAutoTs) / 1000, 0.1);
+  catalogAutoTs = ts;
+  if (!catalogPaused && catalogVisible && catalogCycleWidth) {
+    catalogTrack.scrollLeft += CATALOG_AUTO_SPEED * dt;
+    normalizeCatalogLoop();
+  }
+  window.requestAnimationFrame(catalogAutoTick);
+}
+if (!reducedMotion && !isMobileView) window.requestAnimationFrame(catalogAutoTick);
 
 const picker = root.querySelector('#product-picker');
 const selectionCount = root.querySelector('#selection-count');

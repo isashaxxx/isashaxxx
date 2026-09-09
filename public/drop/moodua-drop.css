@@ -484,6 +484,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .story-highlight {
   position: relative;
+  z-index: 0;
   display: inline-block;
   padding: 0 4px;
   font-style: italic;
@@ -494,10 +495,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .story-highlight::before {
   content: '';
   position: absolute;
-  inset: 0.06em -0.06em;
-  background: var(--aqua-soft);
-  border-radius: 4px;
-  transform: rotate(-0.6deg);
+  inset: -0.05em -0.16em -0.1em;
+  background: rgba(46, 180, 185, 0.32);
+  border-radius: 5px;
+  transform: rotate(-0.8deg);
   z-index: -1;
 }
 
@@ -620,7 +621,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   padding: 10px clamp(20px, 5vw, 84px) 36px;
   scroll-padding-left: clamp(20px, 5vw, 84px);
   scroll-padding-right: clamp(20px, 5vw, 84px);
-  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -885,11 +885,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: var(--radius-full);
   font-size: 11.5px;
   font-weight: 700;
-  background: linear-gradient(165deg, rgba(76, 94, 122, 0.95), var(--ink) 60%);
+  background: var(--ink);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  transition: background-color 0.35s var(--ease), color 0.35s var(--ease), transform 0.35s var(--ease);
+  border: none;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
   cursor: pointer;
 }
 
@@ -938,6 +937,62 @@ h1 em, h2 em, h3 em, dialog h2 em {
   font-size: clamp(38px, 4.8vw, 76px);
   line-height: 0.96;
   letter-spacing: -0.04em;
+}
+
+.builder-steps {
+  position: relative;
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  max-width: 1000px;
+  margin: 0 auto clamp(36px, 4.5vw, 56px);
+}
+
+.builder-steps::before {
+  content: '';
+  position: absolute;
+  top: 51px;
+  left: 54px;
+  right: 54px;
+  border-top: 1.5px dashed var(--line-dark);
+  z-index: 0;
+}
+
+.builder-steps li {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.builder-steps-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.builder-steps .material-icon {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  padding: 17px;
+  box-sizing: content-box;
+  background: var(--surface);
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+
+.builder-steps li span:last-child {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  max-width: 150px;
+  line-height: 1.35;
 }
 
 .builder-shell {
@@ -1669,9 +1724,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Closing Section */
 .closing {
-  background: #2bb3ba;
+  background: #16222f;
   color: #ffffff;
-  padding: clamp(80px, 9vw, 140px) clamp(20px, 5vw, 84px);
+  padding: clamp(64px, 9vw, 120px) clamp(20px, 5vw, 84px);
+  border-radius: var(--radius-lg);
   position: relative;
   z-index: 0;
   overflow: hidden;
@@ -1680,6 +1736,23 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: center;
   text-align: center;
   gap: 28px;
+}
+
+.closing-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  z-index: -2;
+}
+
+.closing-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(10, 16, 26, 0.72) 0%, rgba(10, 16, 26, 0.55) 45%, rgba(10, 16, 26, 0.82) 100%);
 }
 
 .closing .eyebrow {
