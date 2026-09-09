@@ -195,7 +195,7 @@ root.querySelector('#step-editor').addEventListener('click', () => { if (items.l
 root.querySelector('#step-results').addEventListener('click', () => { if (items.length) showResults(); });
 
 function optionButton(label, active, onClick, extraClass = '') {
-  const button = document.createElement('button'); button.type = 'button'; button.className = `option ${extraClass}${active ? ' active' : ''}`; button.textContent = label; button.setAttribute('aria-pressed', active);
+  const button = document.createElement('button'); button.type = 'button'; button.className = ['option', extraClass, active ? 'active' : ''].filter(Boolean).join(' '); button.textContent = label; button.setAttribute('aria-pressed', active);
   button.addEventListener('click', onClick); return button;
 }
 
@@ -327,10 +327,18 @@ root.querySelector('#next-item').addEventListener('click', () => {
   else { showResults(); }
 });
 
+function pluralizeUk(n, one, few, many) {
+  const mod10 = n % 10; const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
+}
+
 function renderCollection() {
   const list = root.querySelector('#collection-list'); list.innerHTML = '';
   const totalUnits = items.reduce((sum, item) => sum + Number(item.quantity), 0);
-  root.querySelector('#collection-total').textContent = `${items.length} позицій · ${totalUnits} шт.`;
+  const positionsWord = pluralizeUk(items.length, 'позиція', 'позиції', 'позицій');
+  root.querySelector('#collection-total').textContent = `${items.length} ${positionsWord} · ${totalUnits} шт.`;
   items.forEach((item) => {
     const product = PRODUCTS[item.productId]; const row = document.createElement('article'); row.className = 'collection-item';
     row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit">${materialIcon('edit')}Редагувати</button><button data-action="duplicate">${materialIcon('content-copy')}Дублювати</button><button data-action="remove">${materialIcon('delete')}Видалити</button></div>`;
@@ -343,7 +351,12 @@ function renderCollection() {
 
 const summaryDialog = root.querySelector('#summary-dialog');
 function openSummary() {
-  root.querySelector('#summary-text').textContent = summarizeCollection(items);
+  const summary = summarizeCollection(items);
+  root.querySelector('#summary-text').textContent = summary;
+  const mailLink = root.querySelector('#summary-mailto');
+  const subject = encodeURIComponent('Моя Drop Collection');
+  const body = encodeURIComponent(summary);
+  mailLink.href = `mailto:info@moodua.com?subject=${subject}&body=${body}`;
   summaryDialog.showModal();
 }
 root.querySelector('#open-summary').addEventListener('click', openSummary);
