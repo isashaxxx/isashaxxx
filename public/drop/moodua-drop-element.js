@@ -128,7 +128,9 @@
           .moodua-seo-intro *{box-sizing:border-box}
           .moodua-seo-intro-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#f0f2f5;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#324158;width:max-content;margin:0 0 16px}
           .moodua-seo-intro h1{font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-.03em;margin:0 0 16px;font-weight:700}
-          .moodua-seo-intro-copy p:not(.moodua-seo-intro-eyebrow){font-size:15px;line-height:1.6;color:#5e6d82;margin:0 0 20px;max-width:560px}
+          .moodua-seo-intro-copy p:not(.moodua-seo-intro-eyebrow){font-size:15px;line-height:1.6;margin:0 0 20px;max-width:560px}
+          .moodua-seo-intro-word{color:rgba(50,65,88,.3);transition:color .5s cubic-bezier(.16,1,.3,1)}
+          .moodua-seo-intro-word.is-visible{color:#5e6d82}
           .moodua-seo-intro-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:999px;background:#324158;color:#fff;font-weight:700;font-size:14px;text-decoration:none}
           .moodua-seo-intro-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
           .moodua-seo-intro-stat{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:16px;box-sizing:border-box;border:1px solid #e3e7ec;border-radius:14px;background:#f8f9fb}
@@ -139,6 +141,7 @@
         `;
       }
 
+      let seoIntroWordEls = [];
       if (!this.querySelector('.moodua-seo-intro')) {
         const introWrap = document.createElement('div');
         introWrap.className = 'moodua-seo-intro';
@@ -151,7 +154,15 @@
         const seoH1 = document.createElement('h1');
         seoH1.textContent = seo.h1;
         const seoIntro = document.createElement('p');
-        seoIntro.textContent = seo.intro;
+        const seoIntroWords = seo.intro.split(' ');
+        seoIntroWordEls = seoIntroWords.map((word, i) => {
+          const span = document.createElement('span');
+          span.className = 'moodua-seo-intro-word';
+          span.textContent = word;
+          seoIntro.append(span);
+          if (i < seoIntroWords.length - 1) seoIntro.append(' ');
+          return span;
+        });
         const cta = document.createElement('a');
         cta.className = 'moodua-seo-intro-cta';
         cta.href = '#builder';
@@ -274,6 +285,31 @@
           .replace(/url\(['"]?(assets\/[^'")]+)['"]?\)/g, (_, path) => `url("${new URL(path, assetBase).href}")`);
         this.shadowRoot.innerHTML = `<style>${css}:host{display:block;width:100%;contain:content}.mood-root{width:100%;overflow:hidden}</style><div class="mood-root">${main.outerHTML}${dialog.outerHTML}</div>`;
         this.cleanup = window.initMoodDrop(this.shadowRoot);
+
+        if (seoIntroWordEls.length) {
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reducedMotion) {
+            seoIntroWordEls.forEach((wordEl) => wordEl.classList.add('is-visible'));
+          } else {
+            let ticking = false;
+            const updateSeoWords = () => {
+              ticking = false;
+              const line = window.innerHeight * 0.78;
+              seoIntroWordEls.forEach((wordEl) => {
+                wordEl.classList.toggle('is-visible', wordEl.getBoundingClientRect().top < line);
+              });
+            };
+            const queueSeoUpdate = () => {
+              if (ticking) return;
+              ticking = true;
+              window.requestAnimationFrame(updateSeoWords);
+            };
+            window.addEventListener('scroll', queueSeoUpdate, { passive: true });
+            window.addEventListener('resize', queueSeoUpdate);
+            window.requestAnimationFrame(() => window.requestAnimationFrame(updateSeoWords));
+          }
+        }
+
         this.dispatchEvent(new CustomEvent('moodua-ready', { bubbles: true, composed: true }));
       } catch (error) {
         console.error('MOODua Drop Collection failed to initialize', error);

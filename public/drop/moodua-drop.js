@@ -113,14 +113,22 @@ catalogObserver.observe(catalogTrack);
 
 const CATALOG_AUTO_SPEED = 34;
 let catalogAutoTs = null;
+let catalogPos = null;
+let catalogWasRunning = false;
 function catalogAutoTick(ts) {
   if (catalogAutoTs === null) catalogAutoTs = ts;
   const dt = Math.min((ts - catalogAutoTs) / 1000, 0.1);
   catalogAutoTs = ts;
-  if (!catalogPaused && catalogVisible && catalogCycleWidth) {
-    catalogTrack.scrollLeft += CATALOG_AUTO_SPEED * dt;
-    normalizeCatalogLoop();
+  const running = !catalogPaused && catalogVisible && catalogCycleWidth;
+  if (running) {
+    if (!catalogWasRunning || catalogPos === null) catalogPos = catalogTrack.scrollLeft;
+    catalogPos += CATALOG_AUTO_SPEED * dt;
+    if (catalogPos >= catalogCycleWidth * 2) catalogPos -= catalogCycleWidth;
+    catalogTrack.scrollLeft = catalogPos;
+  } else {
+    catalogPos = null;
   }
+  catalogWasRunning = running;
   window.requestAnimationFrame(catalogAutoTick);
 }
 if (!reducedMotion && !isMobileView) window.requestAnimationFrame(catalogAutoTick);

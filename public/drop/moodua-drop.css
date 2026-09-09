@@ -753,6 +753,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border: none;
   border-radius: 0;
   backdrop-filter: none;
+  box-shadow: none;
 }
 
 .card-dots button {
