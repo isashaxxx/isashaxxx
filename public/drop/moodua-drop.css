@@ -956,19 +956,19 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: flex-start;
   background: #ffffff;
   border-bottom: 1px solid var(--line);
-  padding: 26px 24px 20px;
+  padding: 22px 24px 18px;
   gap: 4px;
-  counter-reset: builder-progress-step;
 }
 
 .builder-progress::before {
   content: '';
   position: absolute;
-  top: 46px;
+  top: 69.5px;
   left: 16.6667%;
   right: 16.6667%;
-  border-top: 1.5px dashed var(--line-dark);
+  border-top: 2px dashed var(--line-dark);
   z-index: 0;
+  pointer-events: none;
 }
 
 .builder-progress button {
@@ -978,9 +978,9 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 0;
-  border-radius: 0;
+  gap: 8px;
+  padding: 6px 8px 10px;
+  border-radius: var(--radius-sm);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -988,13 +988,18 @@ h1 em, h2 em, h3 em, dialog h2 em {
   color: var(--text-muted);
   background: transparent;
   border: none;
-  transition: color 0.25s var(--ease);
+  transition: background-color 0.25s var(--ease);
   cursor: pointer;
-  counter-increment: builder-progress-step;
 }
 
-.builder-progress button::before {
-  content: counter(builder-progress-step, decimal-leading-zero);
+.builder-progress-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.builder-progress-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1003,35 +1008,42 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--line);
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 700;
-  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease), color 0.25s var(--ease);
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 
-.builder-progress button:hover {
-  color: var(--ink);
+.builder-progress-icon .material-icon {
+  width: 16px;
+  height: 16px;
 }
 
-.builder-progress button:hover::before {
+.builder-progress-label {
+  color: inherit;
+}
+
+.builder-progress button:not(:disabled):hover {
+  background: var(--mist);
+}
+
+.builder-progress button:not(:disabled):hover .builder-progress-icon {
   border-color: var(--line-dark);
-  color: var(--ink);
 }
 
 .builder-progress button.active {
   color: var(--ink);
 }
 
-.builder-progress button.active::before {
+.builder-progress button.active .builder-progress-icon {
   background: var(--ink);
   border-color: var(--ink);
-  color: #ffffff;
+}
+
+.builder-progress button.active .builder-progress-icon .material-icon {
+  filter: brightness(0) invert(1);
 }
 
 .builder-progress button:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
-  pointer-events: none;
 }
 
 /* Picker Panel */
@@ -1959,19 +1971,25 @@ dialog pre {
     height: 400px;
   }
   .builder-progress {
-    padding: 18px 12px 14px;
+    padding: 14px 10px 10px;
   }
   .builder-progress::before {
-    top: 34px;
+    top: 32px;
   }
   .builder-progress button {
     gap: 6px;
+    padding: 4px 4px 8px;
+  }
+  .builder-progress-label {
     font-size: 8.5px;
   }
-  .builder-progress button::before {
-    width: 30px;
-    height: 30px;
-    font-size: 11px;
+  .builder-progress-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .builder-progress-icon .material-icon {
+    width: 13px;
+    height: 13px;
   }
   .product-picker {
     grid-template-columns: repeat(2, 1fr);
