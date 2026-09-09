@@ -940,62 +940,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   letter-spacing: -0.04em;
 }
 
-.builder-steps {
-  position: relative;
-  list-style: none;
-  display: flex;
-  gap: 8px;
-  max-width: 1000px;
-  margin: 0 auto clamp(36px, 4.5vw, 56px);
-}
-
-.builder-steps::before {
-  content: '';
-  position: absolute;
-  top: 51px;
-  left: 54px;
-  right: 54px;
-  border-top: 1.5px dashed var(--line-dark);
-  z-index: 0;
-}
-
-.builder-steps li {
-  position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 10px;
-}
-
-.builder-steps-num {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-}
-
-.builder-steps .material-icon {
-  position: relative;
-  z-index: 1;
-  width: 20px;
-  height: 20px;
-  padding: 17px;
-  box-sizing: content-box;
-  background: var(--surface);
-  border-radius: 50%;
-  border: 1px solid var(--line);
-}
-
-.builder-steps li span:last-child {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--ink);
-  max-width: 150px;
-  line-height: 1.35;
-}
-
 .builder-shell {
   background: #fafafa;
   border: 1px solid var(--line);
