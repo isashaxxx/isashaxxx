@@ -6,12 +6,8 @@ const assetPath = (path) => root === document ? path : new URL(path, root.host.g
 const materialIcon = (name) => `<img class="material-icon" src="${assetPath(`assets/drop/icons/${name}.svg`)}" alt="">`;
 
 const catalogTrack = root.querySelector('#catalog-track');
-let catalogPaused = false;
-let catalogVisible = false;
-let catalogNormalizeTimer;
-const originalCatalogCards = [...catalogTrack.children];
 const catalogProductIds = ['tee', 'polo', 'pocketTee', 'hoodie', 'embossedHoodie'];
-originalCatalogCards.forEach((card, index) => {
+[...catalogTrack.children].forEach((card, index) => {
   card.dataset.product = catalogProductIds[index];
   const button = document.createElement('button');
   button.type = 'button';
@@ -19,20 +15,6 @@ originalCatalogCards.forEach((card, index) => {
   button.textContent = 'Обрати';
   card.querySelector('.product-card-media').append(button);
 });
-const catalogCardsBefore = originalCatalogCards.map((card) => {
-  const before = card.cloneNode(true);
-  before.setAttribute('aria-hidden', 'true');
-  before.querySelector('.catalog-select').tabIndex = -1;
-  return before;
-});
-const catalogCardsAfter = originalCatalogCards.map((card) => {
-  const after = card.cloneNode(true);
-  after.setAttribute('aria-hidden', 'true');
-  after.querySelector('.catalog-select').tabIndex = -1;
-  return after;
-});
-catalogTrack.prepend(...catalogCardsBefore);
-catalogTrack.append(...catalogCardsAfter);
 
 catalogTrack.querySelectorAll('.product-card').forEach((card) => {
   const img = card.querySelector('.product-card-media img');
@@ -54,73 +36,12 @@ catalogTrack.querySelectorAll('.product-card').forEach((card) => {
   show(0);
 });
 
-let catalogCycleWidth = 0;
-let catalogAutoScrollLeft = null;
-function measureCatalogLoop() {
-  catalogCycleWidth = originalCatalogCards.reduce((width, card) => width + card.offsetWidth + 16, 0);
-  const untouched = catalogAutoScrollLeft === null || Math.abs(catalogTrack.scrollLeft - catalogAutoScrollLeft) < 1;
-  if (untouched && catalogCycleWidth) {
-    const scrollPaddingLeft = parseFloat(getComputedStyle(catalogTrack).scrollPaddingLeft) || 0;
-    const target = originalCatalogCards[0].getBoundingClientRect().left - catalogTrack.getBoundingClientRect().left + catalogTrack.scrollLeft - scrollPaddingLeft;
-    catalogTrack.scrollLeft = target;
-    catalogAutoScrollLeft = catalogTrack.scrollLeft;
-  }
-}
-function normalizeCatalogLoop() {
-  if (!catalogCycleWidth) return;
-  if (catalogTrack.scrollLeft < catalogCycleWidth * .35) catalogTrack.scrollLeft += catalogCycleWidth;
-  if (catalogTrack.scrollLeft > catalogCycleWidth * 1.65) catalogTrack.scrollLeft -= catalogCycleWidth;
-}
-window.requestAnimationFrame(measureCatalogLoop);
-window.setTimeout(measureCatalogLoop, 150);
-window.setTimeout(measureCatalogLoop, 600);
-window.addEventListener('resize', measureCatalogLoop);
-function queueCatalogNormalize() {
-  window.clearTimeout(catalogNormalizeTimer);
-  catalogNormalizeTimer = window.setTimeout(normalizeCatalogLoop, 180);
-}
-catalogTrack.addEventListener('scroll', queueCatalogNormalize, { passive: true });
 function cardStep() { return (catalogTrack.querySelector('.product-card')?.offsetWidth || 390) + 16; }
-let catalogManualResume;
-function pauseCatalogManually() {
-  catalogPaused = true;
-  window.clearTimeout(catalogManualResume);
-  catalogManualResume = window.setTimeout(() => { catalogPaused = false; }, 1600);
-}
 function scrollCatalog(direction = 1) {
-  pauseCatalogManually();
   catalogTrack.scrollBy({ left: cardStep() * direction, behavior: reducedMotion ? 'auto' : 'smooth' });
 }
 root.querySelector('#catalog-next').addEventListener('click', () => scrollCatalog(1));
 root.querySelector('#catalog-prev').addEventListener('click', () => scrollCatalog(-1));
-['pointerenter','focusin'].forEach((type) => catalogTrack.addEventListener(type, () => { catalogPaused = true; }));
-['pointerleave','focusout'].forEach((type) => catalogTrack.addEventListener(type, () => { catalogPaused = false; }));
-catalogTrack.addEventListener('touchstart', () => { catalogPaused = true; window.clearTimeout(catalogManualResume); }, { passive: true });
-catalogTrack.addEventListener('touchend', () => { catalogManualResume = window.setTimeout(() => { catalogPaused = false; }, 1500); }, { passive: true });
-const catalogObserver = new IntersectionObserver(([entry]) => { catalogVisible = entry.isIntersecting; }, { threshold: .2 });
-catalogObserver.observe(catalogTrack);
-
-const CATALOG_AUTO_SPEED = 34;
-let catalogAutoTs = null;
-let catalogPos = null;
-let catalogWasRunning = false;
-function catalogAutoTick(ts) {
-  if (catalogAutoTs === null) catalogAutoTs = ts;
-  const dt = Math.min((ts - catalogAutoTs) / 1000, 0.1);
-  catalogAutoTs = ts;
-  const running = !catalogPaused && catalogVisible && catalogCycleWidth;
-  if (running) {
-    if (!catalogWasRunning || catalogPos === null) catalogPos = catalogTrack.scrollLeft;
-    catalogPos += CATALOG_AUTO_SPEED * dt;
-    if (catalogPos >= catalogCycleWidth * 2) catalogPos -= catalogCycleWidth;
-    catalogTrack.scrollLeft = catalogPos;
-  } else {
-    catalogPos = null;
-  }
-  catalogWasRunning = running;
-  window.requestAnimationFrame(catalogAutoTick);
-}
-if (!reducedMotion && !isMobileView) window.requestAnimationFrame(catalogAutoTick);
 
 const picker = root.querySelector('#product-picker');
 const selectionCount = root.querySelector('#selection-count');
@@ -232,7 +153,6 @@ catalogTrack.querySelectorAll('.catalog-select').forEach((button) => button.addE
 
 const editorChipsEl = root.querySelector('#editor-chips');
 const editorGridEl = root.querySelector('.editor-grid');
-const editorStepTitle = root.querySelector('#editor-step-title');
 
 const stepTabs = [root.querySelector('#step-picker'), root.querySelector('#step-editor'), root.querySelector('#step-results')];
 function setStep(index) {
@@ -247,7 +167,6 @@ function setStep(index) {
 function showEditor() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
   editorChipsEl.hidden = false; editorGridEl.hidden = false;
-  editorStepTitle.textContent = 'Налаштування виробу';
   setStep(1);
   renderEditor(); renderCollection();
 }
@@ -255,7 +174,6 @@ function showEditor() {
 function showResults() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
   editorChipsEl.hidden = true; editorGridEl.hidden = true;
-  editorStepTitle.textContent = 'Ваша колекція';
   setStep(2);
   renderCollection();
 }
@@ -498,7 +416,7 @@ root.querySelectorAll('.faq-item').forEach((details) => {
   });
 });
 
-return () => { window.clearInterval(storyTimer); window.clearInterval(catalogTimer); window.clearTimeout(catalogNormalizeTimer); window.removeEventListener('resize', measureCatalogLoop); catalogObserver.disconnect(); revealObserver.disconnect(); };
+return () => { revealObserver.disconnect(); };
 
 }
 window.initMoodDrop = initMoodDrop;
