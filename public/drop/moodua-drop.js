@@ -133,7 +133,11 @@ let activeId = null;
 function hasItem(productId) { return items.some((item) => item.productId === productId); }
 
 function syncSelectionUI() {
-  picker.querySelectorAll('.picker-card').forEach((card) => card.classList.toggle('selected', hasItem(card.dataset.product)));
+  picker.querySelectorAll('.picker-card').forEach((card) => {
+    const picked = hasItem(card.dataset.product);
+    card.classList.toggle('selected', picked);
+    card.querySelector('.picker-card-remove').textContent = picked ? 'Прибрати' : 'Обрати';
+  });
   catalogTrack.querySelectorAll('.product-card').forEach((card) => {
     const isInCollection = hasItem(card.dataset.product);
     const button = card.querySelector('.catalog-select');
@@ -158,7 +162,7 @@ Object.entries(PRODUCTS).forEach(([id, product]) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'picker-card'; button.dataset.product = id;
-  button.innerHTML = `<span class="picker-card-media"><img src="${assetPath(product.photo || product.image)}" alt=""><span class="picker-card-overlay"><span class="picker-card-remove">Прибрати з колекції</span></span></span><strong>${product.name}</strong>`;
+  button.innerHTML = `<span class="picker-card-media"><img src="${assetPath(product.photo || product.image)}" alt=""><span class="picker-card-overlay"><span class="picker-card-remove">Обрати</span></span></span><strong>${product.name}</strong>`;
   button.addEventListener('click', () => {
     const existing = items.find((item) => item.productId === id);
     if (existing) removeItemById(existing.id);

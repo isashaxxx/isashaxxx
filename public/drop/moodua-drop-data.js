@@ -20,12 +20,6 @@
       materials: ['Виварена бавовна 240 г', 'Щільна бавовна 260 г'],
       branding: ['Кастомна кишеня', 'Комбінований друк', 'Нашивка']
     },
-    longsleeve: {
-      name: 'Лонгслів', code: 'CIPHER', image: 'assets/drop/cutouts/cipher.webp',
-      colors: [{ name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Молочний', hex: '#e9e4d9' }],
-      materials: ['Бавовна 220 г', 'Бавовна з еластаном'],
-      branding: ['3D-вишивка', 'Екошкіра', 'Шовкодрук']
-    },
     polo: {
       name: 'Тепле поло', code: 'VELLURA', image: 'assets/drop/vellura-front-cutout.webp',
       photo: 'assets/drop/constructor/vellura.webp',
