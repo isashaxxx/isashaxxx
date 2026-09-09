@@ -631,7 +631,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .marquee-track i {
   font-style: normal;
-  color: #111111;
+  color: var(--aqua);
 }
 
 @keyframes marquee-scroll {
