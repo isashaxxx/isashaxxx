@@ -1,5 +1,5 @@
 function initMoodDrop(root = document) {
-const { PRODUCTS, createItem, updateItem, duplicateItem, removeItem, summarizeCollection } = window.MoodDropData;
+const { PRODUCTS, SIZES, createItem, updateItem, duplicateItem, removeItem, summarizeCollection } = window.MoodDropData;
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobileView = window.matchMedia('(max-width: 640px)').matches;
 const assetPath = (path) => root === document ? path : new URL(path, root.host.getAttribute('asset-base') || document.baseURI).href;
@@ -159,6 +159,7 @@ function syncSelectionUI() {
   startButton.disabled = count === 0;
   progressEditorBtn.disabled = count === 0;
   progressSummaryBtn.disabled = count === 0;
+  renderChips();
 }
 
 function addProductToCollection(productId) {
@@ -170,8 +171,9 @@ function addProductToCollection(productId) {
 
 Object.entries(PRODUCTS).forEach(([id, product]) => {
   const button = document.createElement('button');
+  button.type = 'button';
   button.className = 'picker-card'; button.dataset.product = id;
-  button.innerHTML = `<img src="${assetPath(product.image)}" alt=""><span class="picker-card-info"><strong>${product.name}</strong><small>${product.code}</small></span><span class="picker-check">${materialIcon('check')}</span>`;
+  button.innerHTML = `<span class="picker-card-media"><img src="${assetPath(product.photo || product.image)}" alt=""><span class="picker-card-overlay"><span class="picker-card-remove">Прибрати з колекції</span></span></span><strong>${product.name}</strong>`;
   button.addEventListener('click', () => {
     const existing = items.find((item) => item.productId === id);
     if (existing) removeItemById(existing.id);
@@ -179,6 +181,49 @@ Object.entries(PRODUCTS).forEach(([id, product]) => {
   });
   picker.append(button);
 });
+
+const chipsContainers = [root.querySelector('#picker-chips'), root.querySelector('#editor-chips')];
+
+function renderChips() {
+  chipsContainers.forEach((box, boxIndex) => {
+    box.innerHTML = '';
+    const isEditor = boxIndex === 1;
+    items.forEach((item) => {
+      const product = PRODUCTS[item.productId];
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = `chip${isEditor && item.id === activeId ? ' active' : ''}`;
+      chip.innerHTML = `<span>${product.name}</span>`;
+      const remove = document.createElement('span');
+      remove.className = 'chip-remove';
+      remove.setAttribute('role', 'button');
+      remove.setAttribute('aria-label', `Прибрати ${product.name}`);
+      remove.innerHTML = materialIcon('close');
+      remove.addEventListener('click', (event) => { event.stopPropagation(); removeItemById(item.id); });
+      chip.append(remove);
+      chip.addEventListener('click', () => { activeId = item.id; renderEditor(); renderChips(); });
+      box.append(chip);
+    });
+    if (items.length) {
+      const clear = document.createElement('button');
+      clear.type = 'button';
+      clear.className = 'chip chip-clear';
+      clear.textContent = 'Видалити всі';
+      clear.addEventListener('click', clearCollection);
+      box.append(clear);
+    }
+  });
+}
+
+function clearCollection() {
+  items = [];
+  activeId = null;
+  syncSelectionUI();
+  pickerPanel.hidden = false;
+  editorPanel.hidden = true;
+  setProgressStep(0);
+  renderCollection();
+}
 
 catalogTrack.querySelectorAll('.catalog-select').forEach((button) => button.addEventListener('click', (event) => {
   event.stopPropagation();
@@ -198,19 +243,22 @@ function setProgressStep(index) {
   root.querySelectorAll('.builder-progress button').forEach((item, i) => item.classList.toggle('active', i === index));
 }
 
-const editorTabsEl = root.querySelector('#editor-tabs');
+const editorChipsEl = root.querySelector('#editor-chips');
 const editorGridEl = root.querySelector('.editor-grid');
+const editorStepTitle = root.querySelector('#editor-step-title');
 
 function showEditor() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
-  editorTabsEl.hidden = false; editorGridEl.hidden = false;
+  editorChipsEl.hidden = false; editorGridEl.hidden = false;
+  editorStepTitle.textContent = 'Налаштування виробу';
   setProgressStep(1);
   renderEditor(); renderCollection();
 }
 
 function showResults() {
   pickerPanel.hidden = true; editorPanel.hidden = false;
-  editorTabsEl.hidden = true; editorGridEl.hidden = true;
+  editorChipsEl.hidden = true; editorGridEl.hidden = true;
+  editorStepTitle.textContent = 'Ваша колекція';
   setProgressStep(2);
   renderCollection();
 }
@@ -306,7 +354,9 @@ function renderBarrelControls(item, product) {
   cfg.prints.forEach((entry, index) => brandingBox.append(optionButton(entry.short, index === item.printIndex, () => selectBarrelPrint(product, index))));
 
   const image = barrelResolveImage(cfg, item);
-  root.querySelector('#editor-image').src = assetPath(image);
+  const editorImage = root.querySelector('#editor-image');
+  editorImage.src = assetPath(image);
+  editorImage.classList.remove('is-photo');
   root.querySelector('#editor-preview').style.setProperty('--preview-color', '#ffffff');
 }
 
@@ -323,29 +373,36 @@ function removeItemById(id) {
   renderEditor(); renderCollection();
 }
 
+function renderSizes(item) {
+  const box = root.querySelector('#size-options');
+  box.innerHTML = '';
+  SIZES.forEach((size) => {
+    const active = item.sizes.includes(size);
+    box.append(optionButton(size, active, () => {
+      const next = active ? item.sizes.filter((entry) => entry !== size) : [...item.sizes, size];
+      if (!next.length) return;
+      updateActive({ sizes: SIZES.filter((entry) => next.includes(entry)) });
+    }, 'size'));
+  });
+}
+
 function renderEditor() {
   const item = items.find((entry) => entry.id === activeId); if (!item) return;
   const product = PRODUCTS[item.productId];
-  const tabs = root.querySelector('#editor-tabs'); tabs.innerHTML = '';
-  items.forEach((entry) => {
-    const productData = PRODUCTS[entry.productId]; const button = document.createElement('button'); button.type = 'button'; button.className = `editor-tab${entry.id === activeId ? ' active' : ''}`; button.innerHTML = `<b>${productData.name}</b>`;
-    const removeBtn = document.createElement('span'); removeBtn.className = 'editor-tab-remove'; removeBtn.innerHTML = materialIcon('close'); removeBtn.setAttribute('role', 'button'); removeBtn.setAttribute('aria-label', `Прибрати ${productData.name}`);
-    removeBtn.addEventListener('click', (event) => { event.stopPropagation(); removeItemById(entry.id); });
-    button.append(removeBtn);
-    button.addEventListener('click', () => { activeId = entry.id; renderEditor(); }); tabs.append(button);
-  });
-  root.querySelector('#editor-title').textContent = product.name;
+  renderChips();
   root.querySelector('#editor-image').alt = `Попередній вигляд: ${product.name}`;
   root.querySelector('#preview-code').textContent = product.code;
-  root.querySelector('#preview-word').innerHTML = product.code === 'VERVIE' ? 'WEIRD<br>IS NORMAL' : `${product.code}<br>MOOD`;
+  renderSizes(item);
 
   if (product.configurator) {
     renderBarrelControls(item, product);
   } else {
     root.querySelector('#accent-fieldset').hidden = true;
-    root.querySelector('#editor-image').src = assetPath(product.image);
+    const editorImage = root.querySelector('#editor-image');
+    editorImage.src = assetPath(product.photo || product.image);
+    editorImage.classList.toggle('is-photo', Boolean(product.photo));
     const color = product.colors.find((entry) => entry.name === item.color) || product.colors[0];
-    root.querySelector('#editor-preview').style.setProperty('--preview-color', color.hex);
+    root.querySelector('#editor-preview').style.setProperty('--preview-color', product.photo ? '#f0f2f5' : color.hex);
     const colorBox = root.querySelector('#color-options'); colorBox.innerHTML = '';
     product.colors.forEach((entry) => colorBox.append(colorSwatch(entry.hex, entry.name, entry.name === item.color, () => updateActive({ color: entry.name }))));
     const colorName = document.createElement('strong'); colorName.className = 'color-name'; colorName.textContent = item.color; colorBox.append(colorName);
@@ -374,7 +431,7 @@ function renderCollection() {
   root.querySelector('#collection-total').textContent = `${items.length} позицій · ${totalUnits} шт.`;
   items.forEach((item) => {
     const product = PRODUCTS[item.productId]; const row = document.createElement('article'); row.className = 'collection-item';
-    row.innerHTML = `<img src="${assetPath(product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit">${materialIcon('edit')}Редагувати</button><button data-action="duplicate">${materialIcon('content-copy')}Дублювати</button><button data-action="remove">${materialIcon('delete')}Видалити</button></div>`;
+    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${(item.sizes || []).join('/')} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit">${materialIcon('edit')}Редагувати</button><button data-action="duplicate">${materialIcon('content-copy')}Дублювати</button><button data-action="remove">${materialIcon('delete')}Видалити</button></div>`;
     row.querySelector('[data-action="edit"]').addEventListener('click', () => { activeId = item.id; renderEditor(); root.querySelector('.editor-grid').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' }); });
     row.querySelector('[data-action="duplicate"]').addEventListener('click', () => { items = duplicateItem(items, item.id); activeId = items.at(-1).id; renderEditor(); renderCollection(); });
     row.querySelector('[data-action="remove"]').addEventListener('click', () => removeItemById(item.id));

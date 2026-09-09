@@ -3,15 +3,19 @@
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.MoodDropData = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  const SIZES = ['S', 'M', 'L', 'XL'];
+
   const PRODUCTS = {
     tee: {
-      name: 'Футболка', code: 'MINERAL', image: 'assets/drop/cutouts/mineral.webp',
+      name: 'Виварена футболка', code: 'MINERAL', image: 'assets/drop/cutouts/mineral.webp',
+      photo: 'assets/drop/constructor/mineral.webp',
       colors: [{ name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Молочний', hex: '#e9e4d9' }, { name: 'Корал', hex: '#f47b48' }],
       materials: ['Щільна бавовна 240 г', 'Organic cotton 220 г'],
       branding: ['Багатошаровий патч', 'Шовкодрук', 'Вишивка']
     },
     pocketTee: {
       name: 'Футболка з кишенею', code: 'MANIFEST', image: 'assets/drop/cutouts/manifest.webp',
+      photo: 'assets/drop/constructor/manifest.webp',
       colors: [{ name: 'Бірюза', hex: '#53bfc0' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Молочний', hex: '#e9e4d9' }],
       materials: ['Виварена бавовна 240 г', 'Щільна бавовна 260 г'],
       branding: ['Кастомна кишеня', 'Комбінований друк', 'Нашивка']
@@ -24,18 +28,21 @@
     },
     polo: {
       name: 'Тепле поло', code: 'VELLURA', image: 'assets/drop/vellura-front-cutout.webp',
+      photo: 'assets/drop/constructor/vellura.webp',
       colors: [{ name: 'Молочний', hex: '#e9e4d9' }, { name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Графіт', hex: '#263b59' }],
       materials: ['Футер 320 г', 'Трикотаж 280 г'],
       branding: ['Кастомний комір', 'Вишивка', 'Принт на спині']
     },
     hoodie: {
       name: 'Худі', code: 'VERVIE', image: 'assets/drop/cutouts/vervie.webp',
+      photo: 'assets/drop/constructor/vervie.webp',
       colors: [{ name: 'Молочний', hex: '#e9e4d9' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Корал', hex: '#f47b48' }],
       materials: ['Футер тринитка 350 г', 'Organic cotton 380 г'],
       branding: ['Намистини та принт', 'Обʼємне тиснення', 'Вишивка']
     },
     embossedHoodie: {
       name: 'Худі з тисненням', code: 'BARREL', image: 'assets/drop/cutouts/barrel.webp',
+      photo: 'assets/drop/constructor/barrel.webp',
       colors: [{ name: 'Молочний', hex: '#e9e4d9' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Корал', hex: '#f47b48' }],
       materials: ['Футер тринитка 380 г', 'Бавовна premium 400 г'],
       branding: ['Обʼємне тиснення', 'Вишивка', 'Жакардова бірка'],
@@ -117,6 +124,7 @@
         color: product.palette[0].name,
         material: cfg.materials[0].name,
         branding: cfg.prints[0].name,
+        sizes: [...SIZES],
         quantity: 50
       };
     }
@@ -125,6 +133,7 @@
       color: product.colors[0].name,
       material: product.materials[0],
       branding: product.branding[0],
+      sizes: [...SIZES],
       quantity: 50
     };
   }
@@ -142,9 +151,12 @@
 
   function summarizeCollection(items) {
     const total = items.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-    const list = items.map((item) => `${PRODUCTS[item.productId].name} — ${item.color}, ${item.material}, ${item.branding}, ${item.quantity} шт.`).join('\n');
+    const list = items.map((item) => {
+      const sizes = (item.sizes || []).join('/');
+      return `${PRODUCTS[item.productId].name} — ${item.color}, ${item.material}, ${item.branding}, розміри ${sizes}, ${item.quantity} шт.`;
+    }).join('\n');
     return `${items.length} вироби · ${total} одиниць\n${list}`;
   }
 
-  return { PRODUCTS, createItem, updateItem, duplicateItem, removeItem, summarizeCollection };
+  return { PRODUCTS, SIZES, createItem, updateItem, duplicateItem, removeItem, summarizeCollection };
 });
