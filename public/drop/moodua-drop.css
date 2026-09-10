@@ -27,6 +27,7 @@
   --section-y: clamp(72px, 8vw, 120px);
   --section-x: clamp(20px, 5vw, 84px);
   --content-max: 1372px;
+  --acc-pad-x: clamp(24px, 2.4vw, 36px);
   --heading-gap: clamp(36px, 4.5vw, 60px);
   --btn-h: 52px;
   --btn-h-sm: 44px;
@@ -366,6 +367,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 /* Video teaser placeholder */
 .video-teaser {
   background: var(--paper);
+  padding-top: clamp(26px, 3vw, 44px);
   padding-bottom: clamp(26px, 3vw, 44px);
 }
 
@@ -727,7 +729,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 /* Scroll-revealed statement */
 .statement {
   background: var(--paper);
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -783,7 +785,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: center;
   gap: clamp(16px, 3vw, 40px);
   width: 100%;
-  padding: clamp(20px, 2vw, 26px) clamp(18px, 1.8vw, 26px);
+  padding: clamp(28px, 2.8vw, 38px) var(--acc-pad-x);
   background: none;
   border: none;
   text-align: left;
@@ -856,7 +858,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: start;
   gap: clamp(20px, 3vw, 48px);
   overflow: hidden;
-  padding: 0 clamp(18px, 1.8vw, 26px) 0 calc(76px + clamp(16px, 3vw, 40px) + clamp(18px, 1.8vw, 26px));
+  padding: 6px var(--acc-pad-x) 0 calc(76px + clamp(16px, 3vw, 40px) + var(--acc-pad-x));
 }
 
 .accordion-panel p {
@@ -874,7 +876,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .accordion-thumbs {
   display: flex;
   gap: 10px;
-  margin: 0 0 clamp(24px, 2.6vw, 32px);
+  margin: 0 0 clamp(30px, 3vw, 42px);
 }
 
 .accordion-thumbs img {
@@ -898,7 +900,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   }
   .accordion-panel-inner {
     grid-template-columns: 1fr;
-    padding-left: 0;
+    padding-left: var(--acc-pad-x);
   }
 
 }
@@ -989,9 +991,9 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(28px, 4vw, 72px);
+  gap: clamp(24px, 3vw, 56px);
   width: 100%;
-  padding: clamp(24px, 2.6vw, 40px);
+  padding: clamp(20px, 2.2vw, 32px);
   border-radius: var(--radius-lg);
   background: var(--ivory);
 }
@@ -999,9 +1001,9 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .charity-photo {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 32%;
   border-radius: var(--radius-md);
 }
 
@@ -1010,8 +1012,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
-  padding: clamp(12px, 2vw, 32px) 0;
+  gap: 14px;
+  padding: clamp(8px, 1.4vw, 20px) 0;
   min-height: 100%;
   justify-content: center;
 }
@@ -1035,9 +1037,9 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .charity-script {
   align-self: flex-end;
-  width: clamp(120px, 13vw, 178px);
+  width: clamp(104px, 10vw, 142px);
   height: auto;
-  margin-top: clamp(20px, 3vw, 44px);
+  margin-top: clamp(14px, 2vw, 26px);
   pointer-events: none;
 }
 
