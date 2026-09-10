@@ -21,9 +21,6 @@
   --text-muted: #6b6b6b;
   --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-sm: 0 2px 8px rgba(17, 17, 17, 0.04);
-  --shadow-md: 0 12px 32px -4px rgba(17, 17, 17, 0.07);
-  --shadow-lg: 0 24px 60px -12px rgba(17, 17, 17, 0.11);
   --mist-strong: #e6e6e6;
   --section-y: clamp(72px, 8vw, 120px);
   --section-x: clamp(20px, 5vw, 84px);
@@ -174,7 +171,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   font-size: var(--fs-sm);
   font-weight: 700;
   letter-spacing: -0.01em;
-  transition: transform 0.22s var(--ease), background-color 0.22s var(--ease), box-shadow 0.22s var(--ease), color 0.22s var(--ease);
+  transition: transform 0.22s var(--ease), background-color 0.22s var(--ease), color 0.22s var(--ease);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -186,19 +183,16 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .button-dark {
   background: var(--ink);
   color: #ffffff;
-  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.14);
 }
 
 .button-light {
   background: var(--surface);
   color: var(--ink);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
 .button-accent {
   background: var(--aqua);
   color: #ffffff;
-  box-shadow: 0 4px 16px rgba(46, 180, 185, 0.3);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -217,7 +211,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   opacity: 0.4;
   cursor: not-allowed;
   transform: none !important;
-  box-shadow: none !important;
 }
 
 .material-icon {
@@ -384,7 +377,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--deep);
-  box-shadow: var(--shadow-lg);
 }
 
 @media (max-width: 900px) {
@@ -431,7 +423,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(11, 11, 11, 0.3);
 }
 
 .video-teaser-play svg {
@@ -636,7 +627,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   font-weight: 700;
   color: var(--ink);
   white-space: nowrap;
-  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.18);
   opacity: 0;
   pointer-events: none;
   cursor: pointer;
@@ -767,34 +757,16 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transition: border-color 0.3s var(--ease);
 }
 
 .accordion-item.is-open {
-  background: var(--aqua);
-  border-color: transparent;
-  box-shadow: 0 16px 34px -14px rgba(46, 180, 185, 0.5);
+  background: var(--surface);
+  border-color: var(--ink);
 }
 
 .accordion-item.is-open .accordion-index {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.accordion-item.is-open .accordion-title {
-  color: var(--surface);
-}
-
-.accordion-item.is-open .accordion-icon::before,
-.accordion-item.is-open .accordion-icon::after {
-  background: var(--surface);
-}
-
-.accordion-item.is-open .accordion-panel p {
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.accordion-item.is-open .accordion-panel p strong {
-  color: var(--surface);
+  color: var(--aqua);
 }
 
 .accordion-head {
@@ -948,7 +920,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
 .builder-step-num {
@@ -968,7 +940,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .builder-step.active {
   background: var(--surface);
   color: var(--ink);
-  box-shadow: var(--shadow-sm);
 }
 
 .builder-step.active .builder-step-num {
@@ -1011,7 +982,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: var(--radius-lg);
   background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
 }
 
 .charity-card-media {
@@ -1251,12 +1221,13 @@ h1 em, h2 em, h3 em, dialog h2 em {
   overflow: hidden;
   background: var(--mist);
   border: 1px solid var(--line);
-  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
 .picker-card.selected .picker-card-media {
   border-color: var(--aqua);
-  box-shadow: 0 0 0 2px var(--aqua);
+  outline: 2px solid var(--aqua);
+  outline-offset: 0;
 }
 
 .picker-card img {
@@ -1307,7 +1278,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--ink);
-  box-shadow: 0 4px 14px rgba(17, 17, 17, 0.18);
 }
 
 .picker-card.selected .picker-card-remove {
@@ -1366,7 +1336,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: var(--radius-md);
   background: var(--preview-color, #e9e4d9);
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   transition: background-color 0.4s var(--ease);
 }
 
@@ -1374,7 +1343,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   max-width: 84%;
   max-height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 20px 32px rgba(17, 17, 17, 0.12));
   z-index: 2;
   transition: transform 0.4s var(--ease);
 }
@@ -1515,7 +1483,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   flex-shrink: 0;
   border-radius: 50%;
   border: 2px solid #ffffff;
-  box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.12);
+  outline: 1px solid rgba(17, 17, 17, 0.12);
 }
 
 .color-swatch-name {
@@ -1788,13 +1756,12 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
 .faq-item[open] {
   background: var(--surface);
   border-color: var(--aqua);
-  box-shadow: 0 16px 32px -12px rgba(59, 185, 190, 0.28);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1883,7 +1850,6 @@ dialog {
   width: min(680px, calc(100% - 32px));
   color: var(--ink);
   background: var(--surface);
-  box-shadow: var(--shadow-lg);
   margin: auto;
 }
 
