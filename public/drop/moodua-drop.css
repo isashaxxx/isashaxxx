@@ -1113,19 +1113,15 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .builder-shell {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  background: transparent;
   max-width: 1400px;
   margin: 0 auto;
-  overflow: hidden;
 }
 
 /* Picker Panel */
 .picker-panel {
-  padding: clamp(28px, 4vw, 56px);
-  background: var(--surface);
+  padding: 0;
+  background: transparent;
 }
 
 .step-title {
@@ -1339,7 +1335,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .editor-panel {
-  padding: clamp(28px, 4vw, 56px);
+  padding: 0;
 }
 
 .editor-grid {
@@ -1588,9 +1584,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Collection Summary Step */
 .collection-list-wrap {
-  padding: clamp(32px, 4vw, 54px);
-  background: var(--paper);
+  padding: clamp(30px, 3.4vw, 44px) 0 0;
+  background: transparent;
   border-top: 1px solid var(--line);
+  margin-top: clamp(30px, 3.4vw, 44px);
 }
 
 .panel-title {
