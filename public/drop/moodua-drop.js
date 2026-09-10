@@ -425,7 +425,7 @@ const revealObserver = new IntersectionObserver((entries) => entries.forEach((en
 root.querySelectorAll('.accordion,.faq-list,.catalog-track').forEach((group) => {
   [...group.children].forEach((child, index) => child.style.setProperty('--reveal-i', Math.min(index, 5)));
 });
-root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.faq-heading,.showcase-media,.accordion-item,.product-card,.builder-shell,.faq-item,.charity-card').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
+root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.faq-heading,.video-teaser-frame,.accordion-item,.product-card,.builder-shell,.faq-item,.charity-card').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
 setTimeout(() => root.querySelectorAll('.reveal:not(.in)').forEach((element) => {
   const box = element.getBoundingClientRect();
   if (box.top < window.innerHeight && box.bottom > 0) element.classList.add('in');
