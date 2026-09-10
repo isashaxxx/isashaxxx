@@ -731,8 +731,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
   max-width: 980px;
   margin: 0 auto;
   font-size: var(--fs-h2-sm);
-  font-weight: 700;
-  line-height: 1.05;
+  font-weight: 500;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   text-align: center;
 }
