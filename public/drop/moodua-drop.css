@@ -287,7 +287,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(0deg, rgba(6, 12, 22, 0.9) 0%, rgba(6, 12, 22, 0.5) 42%, rgba(6, 12, 22, 0.2) 68%, rgba(6, 12, 22, 0.32) 100%);
+  background: linear-gradient(0deg, rgba(6, 12, 22, 0.9) 0%, rgba(6, 12, 22, 0.5) 42%, rgba(6, 12, 22, 0.34) 68%, rgba(6, 12, 22, 0.36) 100%);
 }
 
 /* Video teaser placeholder */
@@ -427,6 +427,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
   scroll-snap-type: x proximity;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent 100%);
 }
 
 .catalog-track::-webkit-scrollbar {
@@ -913,7 +915,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Charity */
 .charity {
-  background: #ffffff;
+  background: var(--paper);
 }
 
 .charity-panel {

@@ -6,7 +6,7 @@ const assetPath = (path) => root === document ? path : new URL(path, root.host.g
 const materialIcon = (name) => `<img class="material-icon" src="${assetPath(`assets/drop/icons/${name}.svg`)}" alt="">`;
 
 const catalogTrack = root.querySelector('#catalog-track');
-const catalogProductIds = ['tee', 'polo', 'pocketTee', 'hoodie', 'embossedHoodie'];
+const catalogProductIds = ['tee', 'polo', 'pocketTee', 'hoodie', 'embossedHoodie', 'longsleeve'];
 [...catalogTrack.children].forEach((card, index) => {
   card.dataset.product = catalogProductIds[index];
   const button = document.createElement('button');
