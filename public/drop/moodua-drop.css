@@ -995,104 +995,102 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Charity */
 .charity {
-  background: var(--mist);
-  padding-top: clamp(48px, 5vw, 72px);
-  padding-bottom: clamp(48px, 5vw, 72px);
+  background: var(--paper);
 }
 
-.charity-panel {
+.charity-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(24px, 4vw, 56px);
-  max-width: 940px;
+  gap: clamp(30px, 4vw, 68px);
+  max-width: 1060px;
   margin: 0 auto;
+  padding: clamp(26px, 3vw, 44px);
+  border-radius: var(--radius-lg);
+  background: var(--ink);
 }
 
-.charity-media {
+.charity-card-media {
   position: relative;
-  padding: 46px 0 0 0;
-}
-
-.charity-script {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  width: clamp(122px, 13vw, 164px);
-  height: auto;
-  pointer-events: none;
 }
 
 .charity-photo {
   display: block;
   width: 100%;
-  max-width: 340px;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: center 30%;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 
-.charity-info {
+.charity-script {
+  position: absolute;
+  right: clamp(-18px, -1vw, -8px);
+  top: clamp(-26px, -2vw, -14px);
+  width: clamp(112px, 12vw, 158px);
+  height: auto;
+  pointer-events: none;
+}
+
+.charity-card-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(22px, 2.6vw, 32px);
+  gap: 16px;
+  padding-right: clamp(0px, 2vw, 32px);
+}
+
+.charity-eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.charity-figure {
+  display: flex;
+  align-items: baseline;
+  font-size: clamp(64px, 7.5vw, 116px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--aqua);
+}
+
+.charity-figure span {
+  font-size: 0.42em;
+  letter-spacing: -0.02em;
+  margin-left: 4px;
 }
 
 .charity-headline {
-  font-size: clamp(24px, 2.5vw, 36px);
+  max-width: 480px;
+  font-size: clamp(21px, 2.1vw, 30px);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .charity-headline strong {
-  font-weight: 800;
-}
-
-.charity-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 220px;
-  min-height: var(--btn-h);
-  padding: 14px 32px;
-  border-radius: var(--radius-full);
-  background: var(--ink);
-  color: var(--surface);
-  font-size: var(--fs-sm);
   font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  transition: background-color 0.22s var(--ease), transform 0.22s var(--ease);
+  color: var(--surface);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .charity-cta:hover {
-    background: var(--ink);
-    color: #ffffff;
-  }
-}
-
-.charity-cta:active {
-  transform: scale(0.98);
+.charity-card-copy .button {
+  margin-top: 10px;
 }
 
 @media (max-width: 860px) {
-  .charity-panel {
+  .charity-card {
     grid-template-columns: 1fr;
+    gap: 26px;
   }
-  .charity-media {
-    padding-top: 60px;
+  .charity-card-media {
+    max-width: 380px;
   }
-  .charity-cta {
+  .charity-card-copy .button {
     width: 100%;
-    min-width: 0;
   }
 }
+
 
 /* Section 03 · YOUR COLLECTION (Builder) */
 .builder-section {
