@@ -25,7 +25,6 @@
   --shadow-md: 0 12px 32px -4px rgba(17, 17, 17, 0.07);
   --shadow-lg: 0 24px 60px -12px rgba(17, 17, 17, 0.11);
   --mist-strong: #e6e6e6;
-  --cream: #fbf7ec;
   --section-y: clamp(72px, 8vw, 120px);
   --section-x: clamp(20px, 5vw, 84px);
   --heading-gap: clamp(36px, 4.5vw, 60px);
@@ -269,7 +268,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   padding: clamp(40px, 5vw, 72px) var(--section-x);
   background: var(--deep);
   overflow: hidden;
@@ -284,7 +284,12 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: flex-start;
   gap: 20px;
   max-width: 540px;
-  padding-bottom: clamp(80px, 11vw, 160px);
+}
+
+.hero-copy-center {
+  align-items: center;
+  text-align: center;
+  max-width: 860px;
 }
 
 .hero-eyebrow {
@@ -330,7 +335,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Video teaser placeholder */
 .video-teaser {
-  background: var(--paper);
+  background: var(--surface);
   padding-top: var(--section-y);
   padding-bottom: var(--section-y);
 }
@@ -683,8 +688,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 /* Scroll-revealed statement */
 .statement {
   background: var(--paper);
-  padding-top: var(--section-y);
-  padding-bottom: var(--section-y);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .statement-text {
@@ -698,30 +705,37 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .statement-word {
-  color: rgba(17, 17, 17, 0.16);
-  transition: color 0.6s var(--ease);
+  color: rgba(17, 17, 17, 0.14);
+  transition: color 0.75s var(--ease);
 }
 
 .statement-word.is-visible {
-  color: #111111;
-}
-
-.statement-word-accent {
-  color: rgba(46, 180, 185, 0.3);
-}
-
-.statement-word-accent.is-visible {
-  color: var(--aqua);
+  color: var(--ink);
 }
 
 .accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   max-width: 1200px;
-  margin: clamp(44px, 5vw, 72px) auto 0;
-  border-top: 1px solid var(--line);
+  margin: 0 auto;
 }
 
 .accordion-item {
-  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.accordion-item.is-open {
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+
+.statement-detail {
+  background: var(--paper);
 }
 
 .accordion-head {
@@ -730,7 +744,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: center;
   gap: clamp(16px, 3vw, 40px);
   width: 100%;
-  padding: clamp(22px, 2.4vw, 32px) 0;
+  padding: clamp(22px, 2.4vw, 32px) clamp(20px, 2.4vw, 34px);
   background: none;
   border: none;
   text-align: left;
@@ -821,7 +835,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .accordion-panel p {
   max-width: 620px;
-  margin-left: calc(76px + clamp(16px, 3vw, 40px));
+  margin-left: calc(76px + clamp(20px, 2.4vw, 34px) + clamp(16px, 3vw, 40px));
   font-size: var(--fs-lead);
   line-height: 1.55;
   color: var(--text-muted);
@@ -835,7 +849,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .accordion-thumbs {
   display: flex;
   gap: 10px;
-  margin: 26px 0 clamp(26px, 3vw, 38px) calc(76px + clamp(16px, 3vw, 40px));
+  margin: 26px 0 clamp(26px, 3vw, 38px) calc(76px + clamp(20px, 2.4vw, 34px) + clamp(16px, 3vw, 40px));
 }
 
 .accordion-thumbs img {
@@ -864,7 +878,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   }
   .accordion-panel p,
   .accordion-thumbs {
-    margin-left: 0;
+    margin-left: clamp(20px, 2.4vw, 34px);
   }
 }
 
@@ -981,23 +995,23 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Charity */
 .charity {
-  background: var(--cream);
-  padding-top: clamp(56px, 6vw, 88px);
-  padding-bottom: clamp(56px, 6vw, 88px);
+  background: var(--mist);
+  padding-top: clamp(48px, 5vw, 72px);
+  padding-bottom: clamp(48px, 5vw, 72px);
 }
 
 .charity-panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: clamp(24px, 4vw, 64px);
-  max-width: 1080px;
+  gap: clamp(24px, 4vw, 56px);
+  max-width: 940px;
   margin: 0 auto;
 }
 
 .charity-media {
   position: relative;
-  padding: 58px 0 0 0;
+  padding: 46px 0 0 0;
 }
 
 .charity-script {
@@ -1013,7 +1027,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .charity-photo {
   display: block;
   width: 100%;
-  max-width: 400px;
+  max-width: 340px;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: center 30%;

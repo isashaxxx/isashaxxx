@@ -375,13 +375,11 @@ summaryDialog.addEventListener('click', (event) => { if (event.target === summar
 
 const statementEl = root.querySelector('#statement-text');
 if (statementEl) {
-  const accentWords = new Set(['цінності', 'характер', 'бренду']);
   const words = statementEl.textContent.split(' ');
   statementEl.textContent = '';
   const wordEls = words.map((word, i) => {
     const span = document.createElement('span');
     span.className = 'statement-word';
-    if (accentWords.has(word.replace(/[.,—-]/g, '').toLowerCase())) span.classList.add('statement-word-accent');
     span.textContent = word;
     statementEl.append(span);
     if (i < words.length - 1) statementEl.append(' ');
@@ -393,8 +391,11 @@ if (statementEl) {
     let statementTicking = false;
     const updateStatement = () => {
       statementTicking = false;
-      const line = window.innerHeight * 0.72;
-      wordEls.forEach((el) => el.classList.toggle('is-visible', el.getBoundingClientRect().top < line));
+      const box = statementEl.getBoundingClientRect();
+      const span = window.innerHeight * 0.55 + box.height;
+      const progress = (window.innerHeight * 0.82 - box.top) / span;
+      const shown = Math.ceil(progress * (wordEls.length + 4));
+      wordEls.forEach((el, index) => el.classList.toggle('is-visible', index < shown));
     };
     const queueStatement = () => {
       if (statementTicking) return;
