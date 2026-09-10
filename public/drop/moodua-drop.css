@@ -416,77 +416,114 @@ h1 em, h2 em, h3 em, dialog h2 em {
   letter-spacing: -0.04em;
 }
 
-.catalog-actions {
+.catalog-stage {
+  display: grid;
+  grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 var(--section-x);
+}
+
+.catalog-sticky {
+  position: relative;
+}
+
+.catalog-sticky-inner {
+  position: sticky;
+  top: max(18vh, 120px);
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
 }
 
-.catalog-actions p {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-right: 6px;
-}
-
-.catalog-actions button {
-  width: var(--control-h);
-  height: var(--control-h);
-  border-radius: 50%;
+.catalog-sticky-badge {
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
   background: var(--mist);
-  border: 1px solid transparent;
+  font-size: var(--fs-eyebrow);
+  font-weight: 800;
+  letter-spacing: 0.12em;
   color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .catalog-actions button:hover {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: #ffffff;
-  }
-  .catalog-actions button:hover .material-icon {
-    filter: brightness(0) invert(1);
-  }
+.catalog-sticky-title {
+  font-size: var(--fs-h2-sm);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
 }
 
-.catalog-track {
+.catalog-sticky-desc {
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 340px;
+}
+
+.catalog-sticky-counter {
+  margin-top: 10px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.catalog-sticky-counter span {
+  color: var(--ink);
+}
+
+.catalog-sticky-badge,
+.catalog-sticky-title,
+.catalog-sticky-desc,
+.catalog-sticky-counter span {
+  transition: opacity 0.3s var(--ease);
+}
+
+.catalog-sticky.is-swapping .catalog-sticky-badge,
+.catalog-sticky.is-swapping .catalog-sticky-title,
+.catalog-sticky.is-swapping .catalog-sticky-desc,
+.catalog-sticky.is-swapping .catalog-sticky-counter span {
+  opacity: 0;
+}
+
+.catalog-scroll {
   display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 10px var(--section-x) 36px;
-  scroll-padding-left: var(--section-x);
-  scroll-padding-right: var(--section-x);
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent 100%);
-  mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent 100%);
-}
-
-.catalog-track::-webkit-scrollbar {
-  display: none;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 40px);
 }
 
 .product-card {
-  flex: 0 0 clamp(240px, 22vw, 300px);
   display: flex;
   flex-direction: column;
   gap: 14px;
   background: transparent;
   border: none;
-  scroll-snap-align: start;
+}
+
+.product-card-body {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .catalog-stage {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .catalog-sticky {
+    display: none;
+  }
+  .product-card-body {
+    display: flex;
+  }
 }
 
 .product-card-media {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   background: var(--mist);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -1980,14 +2017,6 @@ dialog pre {
     padding: 5px 12px;
     font-size: var(--fs-eyebrow);
   }
-  .catalog-actions button {
-    width: 44px;
-    height: 44px;
-  }
-  .catalog-actions button .material-icon {
-    width: 14px;
-    height: 14px;
-  }
   .panel-title {
     flex-direction: column;
     align-items: flex-start;
@@ -1998,18 +2027,6 @@ dialog pre {
     align-items: flex-start;
     gap: 16px;
     padding: 0 16px;
-  }
-  .catalog-actions p {
-    display: none;
-  }
-  .catalog-track {
-    padding: 10px 16px 28px;
-    scroll-padding-left: 16px;
-    scroll-padding-right: 16px;
-    gap: 14px;
-  }
-  .product-card {
-    flex: 0 0 260px;
   }
   .product-picker {
     grid-template-columns: repeat(2, 1fr);
