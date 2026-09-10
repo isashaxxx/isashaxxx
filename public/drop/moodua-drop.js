@@ -18,60 +18,22 @@ const catalogProductIds = ['tee', 'polo', 'pocketTee', 'hoodie', 'embossedHoodie
 
 catalogTrack.querySelectorAll('.product-card').forEach((card) => {
   const img = card.querySelector('.product-card-media img');
-  const media = card.querySelector('.product-card-media');
   const prevBtn = card.querySelector('.card-nav.prev');
   const nextBtn = card.querySelector('.card-nav.next');
-  if (!img || !media || !prevBtn || !nextBtn) return;
+  if (!img || !prevBtn || !nextBtn) return;
   let gallery;
   try { gallery = JSON.parse(card.dataset.gallery || '[]'); } catch (e) { gallery = []; }
   if (!gallery.length) gallery = [img.getAttribute('src')];
-  const alt = img.getAttribute('alt') || '';
-
-  const strip = document.createElement('div');
-  strip.className = 'product-card-gallery';
-  gallery.forEach((src, i) => {
-    const slide = document.createElement('img');
-    slide.src = assetPath(src);
-    slide.alt = i === 0 ? alt : '';
-    slide.draggable = false;
-    if (i > 0) slide.loading = 'lazy';
-    strip.append(slide);
-  });
-  img.replaceWith(strip);
-
   if (gallery.length <= 1) { card.classList.add('single'); return; }
-
-  const dots = document.createElement('div');
-  dots.className = 'product-card-dots';
-  gallery.forEach(() => dots.append(document.createElement('span')));
-  media.append(dots);
-
+  gallery.forEach((src) => { const preload = new Image(); preload.src = assetPath(src); });
   let index = 0;
-  function markDot(next) {
-    index = next;
-    [...dots.children].forEach((dot, i) => dot.classList.toggle('active', i === index));
+  function show(next) {
+    index = (next + gallery.length) % gallery.length;
+    img.src = assetPath(gallery[index]);
   }
-  markDot(0);
-
-  function goTo(next) {
-    const target = Math.max(0, Math.min(gallery.length - 1, next));
-    strip.scrollTo({ left: strip.clientWidth * target, behavior: reducedMotion ? 'auto' : 'smooth' });
-  }
-  prevBtn.addEventListener('click', (event) => { event.stopPropagation(); goTo(index - 1); });
-  nextBtn.addEventListener('click', (event) => { event.stopPropagation(); goTo(index + 1); });
-
-  let ticking = false;
-  strip.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      const width = strip.clientWidth;
-      if (!width) return;
-      const next = Math.round(strip.scrollLeft / width);
-      if (next !== index) markDot(next);
-    });
-  }, { passive: true });
+  prevBtn.addEventListener('click', (event) => { event.stopPropagation(); show(index - 1); });
+  nextBtn.addEventListener('click', (event) => { event.stopPropagation(); show(index + 1); });
+  show(0);
 });
 
 function cardStep() { return (catalogTrack.querySelector('.product-card')?.offsetWidth || 390) + 16; }

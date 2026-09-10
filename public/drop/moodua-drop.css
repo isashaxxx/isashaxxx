@@ -473,78 +473,17 @@ h1 em, h2 em, h3 em, dialog h2 em {
   overflow: hidden;
 }
 
-.product-card-gallery {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  touch-action: pan-x;
-}
-
-.product-card-gallery::-webkit-scrollbar {
-  display: none;
-}
-
 .product-card-media img {
-  flex: 0 0 100%;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 18%;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  user-select: none;
   transition: transform 0.5s var(--ease);
-}
-
-.product-card-dots {
-  position: absolute;
-  left: 50%;
-  bottom: 14px;
-  transform: translateX(-50%);
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 10px;
-  border-radius: var(--radius-full);
-  background: rgba(17, 17, 17, 0.4);
-  backdrop-filter: blur(4px);
-  pointer-events: none;
-  transition: transform 0.25s var(--ease);
-}
-
-.product-card-dots span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.45);
-  transition: background-color 0.25s var(--ease), width 0.25s var(--ease);
-}
-
-.product-card-dots span.active {
-  width: 14px;
-  border-radius: var(--radius-full);
-  background: #ffffff;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .product-card:hover .product-card-media img {
     transform: scale(1.04);
-  }
-  .product-card:hover .product-card-dots {
-    transform: translate(-50%, -48px);
-  }
-}
-
-@media (pointer: coarse) {
-  .product-card-dots {
-    transform: translate(-50%, -48px);
   }
 }
 
@@ -674,10 +613,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .product-card.single .card-nav {
   display: none;
-}
-
-.product-card.single .product-card-gallery {
-  overflow: hidden;
 }
 
 @media (pointer: coarse) {
@@ -908,74 +843,63 @@ h1 em, h2 em, h3 em, dialog h2 em {
 /* Builder step tabs */
 .builder-steps {
   display: flex;
-  gap: clamp(10px, 2vw, 26px);
+  gap: 4px;
   width: 100%;
   max-width: 560px;
   margin: 0 auto clamp(28px, 3.5vw, 44px);
+  padding: 5px;
+  background: var(--mist);
+  border-radius: var(--radius-full);
 }
 
 .builder-step {
   flex: 1;
   min-width: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 7px;
-  padding: 15px 0 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
   border: none;
+  border-radius: var(--radius-full);
   background: transparent;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: -0.01em;
   color: var(--text-muted);
-  text-align: left;
-  white-space: nowrap;
   cursor: pointer;
-  transition: color 0.3s var(--ease);
-}
-
-.builder-step::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--line);
-  transition: background-color 0.35s var(--ease);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
 .builder-step-num {
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--line);
   color: var(--text-muted);
-  transition: color 0.3s var(--ease);
+  font-size: 10px;
+  font-weight: 800;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-.builder-step-num::before {
-  content: '0';
-}
-
-.builder-step.active,
-.builder-step.active .builder-step-num,
-.builder-step:has(~ .builder-step.active) {
+.builder-step.active {
+  background: #ffffff;
   color: var(--ink);
+  box-shadow: var(--shadow-sm);
 }
 
-.builder-step:has(~ .builder-step.active) .builder-step-num {
-  color: var(--aqua);
-}
-
-.builder-step.active::before,
-.builder-step:has(~ .builder-step.active)::before {
+.builder-step.active .builder-step-num {
   background: var(--ink);
+  color: #ffffff;
 }
 
 .builder-step:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -986,13 +910,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 @media (max-width: 420px) {
-  .builder-steps {
-    gap: 8px;
-  }
   .builder-step {
-    font-size: 11px;
+    padding: 10px 6px;
     gap: 5px;
-    padding-top: 12px;
+    font-size: 11px;
   }
 }
 
