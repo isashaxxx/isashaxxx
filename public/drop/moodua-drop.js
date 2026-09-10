@@ -36,50 +36,12 @@ catalogTrack.querySelectorAll('.product-card').forEach((card) => {
   show(0);
 });
 
-const stickyPanel = root.querySelector('.catalog-sticky');
-const stickyBadge = root.querySelector('#catalog-sticky-badge');
-const stickyTitle = root.querySelector('#catalog-sticky-title');
-const stickyDesc = root.querySelector('#catalog-sticky-desc');
-const stickyIndex = root.querySelector('#catalog-sticky-index');
-const catalogCards = [...catalogTrack.querySelectorAll('.product-card')];
-let stickyActive = -1;
-
-function setStickyProduct(index) {
-  if (index === stickyActive || !catalogCards[index]) return;
-  stickyActive = index;
-  const card = catalogCards[index];
-  const apply = () => {
-    stickyBadge.textContent = card.querySelector('.product-card-badge').textContent;
-    stickyTitle.textContent = card.querySelector('.product-card-info h3').textContent;
-    stickyDesc.textContent = card.querySelector('.product-card-info p').textContent;
-    stickyIndex.textContent = String(index + 1).padStart(2, '0');
-    stickyPanel.classList.remove('is-swapping');
-  };
-  if (reducedMotion) { apply(); return; }
-  stickyPanel.classList.add('is-swapping');
-  setTimeout(apply, 220);
+function cardStep() { return (catalogTrack.querySelector('.product-card')?.offsetWidth || 390) + 16; }
+function scrollCatalog(direction = 1) {
+  catalogTrack.scrollBy({ left: cardStep() * direction, behavior: reducedMotion ? 'auto' : 'smooth' });
 }
-
-let stickyTicking = false;
-function syncStickyProduct() {
-  const middle = window.innerHeight / 2;
-  let best = 0;
-  let bestDistance = Infinity;
-  catalogCards.forEach((card, index) => {
-    const box = card.getBoundingClientRect();
-    const distance = Math.abs(box.top + box.height / 2 - middle);
-    if (distance < bestDistance) { bestDistance = distance; best = index; }
-  });
-  setStickyProduct(best);
-}
-function onStickyScroll() {
-  if (stickyTicking) return;
-  stickyTicking = true;
-  requestAnimationFrame(() => { stickyTicking = false; syncStickyProduct(); });
-}
-window.addEventListener('scroll', onStickyScroll, { passive: true });
-window.addEventListener('resize', onStickyScroll);
-syncStickyProduct();
+root.querySelector('#catalog-next').addEventListener('click', () => scrollCatalog(1));
+root.querySelector('#catalog-prev').addEventListener('click', () => scrollCatalog(-1));
 
 const picker = root.querySelector('#product-picker');
 const selectionCount = root.querySelector('#selection-count');
@@ -445,11 +407,24 @@ if (statementEl) {
   }
 }
 
+root.querySelectorAll('.accordion-head').forEach((head) => head.addEventListener('click', () => {
+  const item = head.closest('.accordion-item');
+  const willOpen = !item.classList.contains('is-open');
+  root.querySelectorAll('.accordion-item').forEach((other) => {
+    other.classList.remove('is-open');
+    other.querySelector('.accordion-head').setAttribute('aria-expanded', 'false');
+  });
+  if (willOpen) {
+    item.classList.add('is-open');
+    head.setAttribute('aria-expanded', 'true');
+  }
+}));
+
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); } }), { threshold: .12 });
-root.querySelectorAll('.statement-points,.faq-list,.catalog-scroll').forEach((group) => {
+root.querySelectorAll('.accordion,.faq-list,.catalog-track').forEach((group) => {
   [...group.children].forEach((child, index) => child.style.setProperty('--reveal-i', Math.min(index, 5)));
 });
-root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.faq-heading,.video-teaser-frame,.statement-card,.product-card,.builder-shell,.faq-item,.charity-media,.charity-info,.final-cta-copy').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
+root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.faq-heading,.video-teaser-frame,.accordion-item,.product-card,.builder-shell,.faq-item,.charity-media,.charity-info,.final-cta-copy').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
 setTimeout(() => root.querySelectorAll('.reveal:not(.in)').forEach((element) => {
   const box = element.getBoundingClientRect();
   if (box.top < window.innerHeight && box.bottom > 0) element.classList.add('in');
@@ -480,7 +455,7 @@ root.querySelectorAll('.faq-item').forEach((details) => {
   });
 });
 
-return () => { revealObserver.disconnect(); window.removeEventListener('scroll', onStickyScroll); window.removeEventListener('resize', onStickyScroll); };
+return () => { revealObserver.disconnect(); };
 
 }
 window.initMoodDrop = initMoodDrop;
