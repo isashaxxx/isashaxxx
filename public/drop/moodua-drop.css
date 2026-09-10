@@ -30,13 +30,14 @@
   --btn-h-sm: 44px;
   --control-h: 44px;
   --fs-display: clamp(54px, 6.4vw, 98px);
-  --fs-h2: clamp(38px, 4.8vw, 76px);
+  --fs-h2: clamp(34px, 4.6vw, 58px);
   --fs-h2-sm: clamp(30px, 4.2vw, 58px);
   --fs-h3: clamp(22px, 2.4vw, 30px);
-  --fs-h4: 17px;
-  --fs-lead: clamp(15px, 1.2vw, 18px);
-  --fs-body: 15px;
+  --fs-h4: 16px;
+  --fs-lead: 16px;
+  --fs-body: 16px;
   --fs-sm: 13px;
+  --fs-body-sm: 14px;
   --fs-xs: 12px;
   --fs-eyebrow: 11px;
   --radius-sm: 10px;
@@ -172,7 +173,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   min-height: var(--btn-h);
   padding: 14px 26px;
   border-radius: var(--radius-full);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-h4);
   font-weight: 700;
   letter-spacing: -0.01em;
   transition: transform 0.22s var(--ease), background-color 0.22s var(--ease), color 0.22s var(--ease);
@@ -311,6 +312,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .hero-eyebrow {
   color: var(--surface);
+  font-size: var(--fs-body-sm);
 }
 
 .hero-eyebrow::before {
@@ -361,7 +363,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .statement-detail {
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .video-teaser-frame {
@@ -752,15 +754,15 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .accordion-item {
   background: var(--paper);
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: border-color 0.3s var(--ease);
 }
 
 .accordion-item.is-open {
-  background: var(--surface);
-  border-color: var(--ink);
+  background: var(--paper);
+  border-color: var(--line-dark);
 }
 
 .accordion-item.is-open .accordion-index {
@@ -846,7 +848,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: start;
   gap: clamp(20px, 3vw, 48px);
   overflow: hidden;
-  padding-left: calc(76px + clamp(16px, 3vw, 40px));
+  padding: 0 clamp(18px, 1.8vw, 26px) 0 calc(76px + clamp(16px, 3vw, 40px) + clamp(18px, 1.8vw, 26px));
 }
 
 .accordion-panel p {
@@ -917,7 +919,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border: none;
   border-radius: var(--radius-full);
   background: transparent;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body-sm);
   font-weight: 700;
   color: var(--text-muted);
   cursor: pointer;
