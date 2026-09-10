@@ -468,7 +468,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   width: var(--control-h);
   height: var(--control-h);
   border-radius: 50%;
-  background: var(--mist);
+  background: var(--paper);
   border: 1px solid transparent;
   color: var(--ink);
   display: inline-flex;
