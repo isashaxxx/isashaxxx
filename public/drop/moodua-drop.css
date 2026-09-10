@@ -11,6 +11,7 @@
   --aqua: #2eb4b9;
   --aqua-hover: #269ca0;
   --aqua-soft: rgba(46, 180, 185, 0.12);
+  --navy: #13293d;
   --coral: #ff6543;
   --coral-soft: rgba(255, 101, 67, 0.1);
   --paper: #fafafa;
@@ -117,16 +118,15 @@ dialog .eyebrow,
 .charity-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 11px;
   width: max-content;
-  padding: 8px 16px 8px 13px;
-  border-radius: var(--radius-full);
-  font-size: var(--fs-sm);
+  padding: 0;
+  font-size: var(--fs-h4);
   font-weight: 500;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.015em;
   text-transform: none;
-  color: var(--text-muted);
-  background: var(--mist);
+  color: var(--ink);
+  background: none;
 }
 
 .section-heading > .eyebrow::before,
@@ -138,11 +138,15 @@ dialog .eyebrow::before,
 .hero-eyebrow::before,
 .charity-eyebrow::before {
   content: '';
-  width: 7px;
-  height: 7px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: var(--line-dark);
   flex-shrink: 0;
+  background-color: var(--navy);
+  background-image: linear-gradient(var(--surface), var(--surface)), linear-gradient(var(--surface), var(--surface));
+  background-size: 10px 1.6px, 1.6px 10px;
+  background-position: center, center;
+  background-repeat: no-repeat;
 }
 
 h1, h2, h3, h4 {
@@ -306,13 +310,12 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .hero-eyebrow {
-  color: rgba(255, 255, 255, 0.82);
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(6px);
+  color: var(--surface);
 }
 
 .hero-eyebrow::before {
-  background: rgba(255, 255, 255, 0.55);
+  background-color: var(--surface);
+  background-image: linear-gradient(var(--navy), var(--navy)), linear-gradient(var(--navy), var(--navy));
 }
 
 .hero-copy h1 {
@@ -1981,8 +1984,7 @@ dialog pre {
   .catalog-heading .eyebrow,
   .builder-heading > .eyebrow,
   .faq-heading > .eyebrow {
-    padding: 8px 15px 8px 13px;
-    font-size: var(--fs-xs);
+    font-size: var(--fs-body);
   }
   .catalog-actions button {
     width: 44px;
