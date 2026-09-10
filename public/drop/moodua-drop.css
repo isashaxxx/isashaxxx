@@ -118,7 +118,7 @@ dialog .eyebrow,
 .charity-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 9px;
   width: max-content;
   padding: 0;
   font-size: var(--fs-h4);
@@ -138,13 +138,13 @@ dialog .eyebrow::before,
 .hero-eyebrow::before,
 .charity-eyebrow::before {
   content: '';
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   flex-shrink: 0;
   background-color: var(--navy);
   background-image: linear-gradient(var(--surface), var(--surface)), linear-gradient(var(--surface), var(--surface));
-  background-size: 10px 1.6px, 1.6px 10px;
+  background-size: 8px 1.4px, 1.4px 8px;
   background-position: center, center;
   background-repeat: no-repeat;
 }
