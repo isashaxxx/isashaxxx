@@ -200,8 +200,12 @@ function optionButton(label, active, onClick, extraClass = '') {
 }
 
 function colorSwatch(hex, name, active, onClick) {
-  const button = optionButton('', active, onClick);
-  button.style.setProperty('--color', hex); button.setAttribute('aria-label', name); button.title = name;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'color-swatch' + (active ? ' active' : '');
+  button.setAttribute('aria-pressed', active);
+  button.innerHTML = `<span class="color-swatch-dot" style="background:${hex}"></span><span class="color-swatch-name">${name}</span>`;
+  button.addEventListener('click', onClick);
   return button;
 }
 
@@ -255,13 +259,11 @@ function renderBarrelControls(item, product) {
   const bodyIndices = cfg.prints[item.printIndex].colors || cfg.materials[item.materialIndex].colors;
   const colorBox = root.querySelector('#color-options'); colorBox.innerHTML = '';
   bodyIndices.forEach((index) => colorBox.append(colorSwatch(product.palette[index].hex, product.palette[index].name, index === item.body, () => selectBarrelBody(index))));
-  const colorName = document.createElement('strong'); colorName.className = 'color-name'; colorName.textContent = product.palette[item.body].name; colorBox.append(colorName);
 
   const canChangeAccent = item.materialIndex === 0 && item.printIndex === 0;
   const accentIndices = canChangeAccent ? (cfg.detailOptions[item.body] || [item.body]) : [item.body];
   const accentBox = root.querySelector('#accent-options'); accentBox.innerHTML = '';
   accentIndices.forEach((index) => accentBox.append(colorSwatch(product.palette[index].hex, product.palette[index].name, index === item.accent, () => selectBarrelAccent(index))));
-  const accentName = document.createElement('strong'); accentName.className = 'color-name'; accentName.textContent = product.palette[item.accent].name; accentBox.append(accentName);
 
   const materialBox = root.querySelector('#material-options'); materialBox.innerHTML = '';
   cfg.materials.forEach((entry, index) => materialBox.append(optionButton(entry.short, index === item.materialIndex, () => selectBarrelMaterial(product, index))));
@@ -307,7 +309,6 @@ function renderEditor() {
     root.querySelector('#editor-preview').style.setProperty('--preview-color', product.photo ? '#f0f2f5' : color.hex);
     const colorBox = root.querySelector('#color-options'); colorBox.innerHTML = '';
     product.colors.forEach((entry) => colorBox.append(colorSwatch(entry.hex, entry.name, entry.name === item.color, () => updateActive({ color: entry.name }))));
-    const colorName = document.createElement('strong'); colorName.className = 'color-name'; colorName.textContent = item.color; colorBox.append(colorName);
     const materialBox = root.querySelector('#material-options'); materialBox.innerHTML = '';
     product.materials.forEach((entry) => materialBox.append(optionButton(entry, entry === item.material, () => updateActive({ material: entry }))));
     const brandingBox = root.querySelector('#branding-options'); brandingBox.innerHTML = '';
