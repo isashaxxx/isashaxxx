@@ -342,7 +342,7 @@ function renderCollection() {
   root.querySelector('#collection-total').textContent = `${items.length} ${positionsWord} · ${totalUnits} шт.`;
   items.forEach((item) => {
     const product = PRODUCTS[item.productId]; const row = document.createElement('article'); row.className = 'collection-item';
-    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit" aria-label="Редагувати ${product.name}" title="Редагувати">${materialIcon('edit')}</button><button data-action="remove" aria-label="Видалити ${product.name}" title="Видалити">${materialIcon('delete')}</button></div>`;
+    row.innerHTML = `<img src="${assetPath(product.photo || product.image)}" alt=""><div><h4>${product.name}</h4><p>${item.color} · ${item.branding} · ${item.quantity} шт.</p></div><div class="item-actions"><button data-action="edit" aria-label="Редагувати ${product.name}"><span class="item-action-icon">${materialIcon('edit')}</span><span class="item-action-text">Редагувати</span></button><button data-action="remove" aria-label="Видалити ${product.name}"><span class="item-action-icon">${materialIcon('delete')}</span><span class="item-action-text">Видалити</span></button></div>`;
     row.querySelector('[data-action="edit"]').addEventListener('click', () => { activeId = item.id; showEditor(); root.querySelector('.editor-grid').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' }); });
     row.querySelector('[data-action="remove"]').addEventListener('click', () => removeItemById(item.id));
     list.append(row);

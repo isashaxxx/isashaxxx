@@ -217,50 +217,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   filter: none;
 }
 
-.button-expand {
-  width: 56px;
-  min-height: 56px;
-  padding: 0;
-  gap: 0;
-  justify-content: flex-start;
-  overflow: hidden;
-  transition: width 0.34s var(--ease), background-color 0.22s var(--ease), box-shadow 0.22s var(--ease), transform 0.22s var(--ease);
-}
-
-.button-expand-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 56px;
-  width: 56px;
-  height: 56px;
-}
-
-.button-expand-text {
-  opacity: 0;
-  white-space: nowrap;
-  padding-right: 26px;
-  transition: opacity 0.24s var(--ease);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .button-expand:hover {
-    width: 236px;
-  }
-  .button-expand:hover .button-expand-text {
-    opacity: 1;
-  }
-}
-
-@media (pointer: coarse) {
-  .button-expand {
-    width: 236px;
-  }
-  .button-expand-text {
-    opacity: 1;
-  }
-}
-
 /* Sections Layout */
 .section {
   padding: clamp(72px, 8vw, 120px) clamp(20px, 5vw, 84px);
@@ -1604,32 +1560,72 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .item-actions {
   display: flex;
   gap: 8px;
+  flex-shrink: 0;
+}
+
+.collection-item > div:not(.item-actions) {
+  min-width: 0;
+}
+
+.collection-item h4,
+.collection-item > div:not(.item-actions) p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .item-actions button {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  flex: 0 0 44px;
   width: 44px;
   height: 44px;
   padding: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   border: 1px solid transparent;
   background: var(--mist);
   color: var(--ink);
-  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+  overflow: hidden;
   cursor: pointer;
+  transition: flex-basis 0.32s var(--ease), width 0.32s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.item-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+}
+
+.item-action-text {
+  opacity: 0;
+  padding-right: 18px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: opacity 0.22s var(--ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .item-actions button:hover {
+    flex-basis: 152px;
+    width: 152px;
     background: var(--ink);
     color: #ffffff;
+  }
+  .item-actions button:hover .item-action-text {
+    opacity: 1;
   }
   .item-actions button:hover .material-icon {
     filter: brightness(0) invert(1);
   }
   .item-actions button[data-action="remove"]:hover {
+    flex-basis: 140px;
+    width: 140px;
     background: var(--coral);
   }
 }
