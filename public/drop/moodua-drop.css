@@ -217,6 +217,50 @@ h1 em, h2 em, h3 em, dialog h2 em {
   filter: none;
 }
 
+.button-expand {
+  width: 56px;
+  min-height: 56px;
+  padding: 0;
+  gap: 0;
+  justify-content: flex-start;
+  overflow: hidden;
+  transition: width 0.34s var(--ease), background-color 0.22s var(--ease), box-shadow 0.22s var(--ease), transform 0.22s var(--ease);
+}
+
+.button-expand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+}
+
+.button-expand-text {
+  opacity: 0;
+  white-space: nowrap;
+  padding-right: 26px;
+  transition: opacity 0.24s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button-expand:hover {
+    width: 236px;
+  }
+  .button-expand:hover .button-expand-text {
+    opacity: 1;
+  }
+}
+
+@media (pointer: coarse) {
+  .button-expand {
+    width: 236px;
+  }
+  .button-expand-text {
+    opacity: 1;
+  }
+}
+
 /* Sections Layout */
 .section {
   padding: clamp(72px, 8vw, 120px) clamp(20px, 5vw, 84px);
