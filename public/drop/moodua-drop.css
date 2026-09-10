@@ -117,15 +117,15 @@ dialog .eyebrow,
 .charity-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   width: max-content;
-  padding: 9px 18px 9px 15px;
+  padding: 8px 16px 8px 13px;
   border-radius: var(--radius-full);
   font-size: var(--fs-sm);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  letter-spacing: -0.005em;
   text-transform: none;
-  color: var(--ink);
+  color: var(--text-muted);
   background: var(--mist);
 }
 
@@ -138,10 +138,10 @@ dialog .eyebrow::before,
 .hero-eyebrow::before,
 .charity-eyebrow::before {
   content: '';
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--line-dark);
   flex-shrink: 0;
 }
 
@@ -259,7 +259,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
+  gap: 26px;
   max-width: 860px;
 }
 
@@ -306,13 +306,13 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .hero-eyebrow {
-  color: var(--surface);
-  background: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(6px);
 }
 
 .hero-eyebrow::before {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .hero-copy h1 {
@@ -452,7 +452,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .catalog-heading .eyebrow {
-  margin-bottom: 12px;
+  margin-bottom: 22px;
 }
 
 .catalog-heading h2 {
@@ -1013,6 +1013,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   gap: 12px;
 }
 
+.charity-card-copy .eyebrow {
+  margin-bottom: 8px;
+}
+
 .charity-figure {
   display: flex;
   align-items: baseline;
@@ -1075,7 +1079,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 22px;
 }
 
 .builder-heading h2 {
@@ -1725,7 +1729,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .faq-heading {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 22px;
   position: sticky;
   top: 32px;
 }
