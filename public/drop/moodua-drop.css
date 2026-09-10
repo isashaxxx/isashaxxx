@@ -12,6 +12,7 @@
   --aqua-hover: #269ca0;
   --aqua-soft: rgba(46, 180, 185, 0.12);
   --navy: #13293d;
+  --ivory: #fdfcf3;
   --coral: #ff6543;
   --coral-soft: rgba(255, 101, 67, 0.1);
   --paper: #fafafa;
@@ -986,19 +987,13 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .charity-card {
   display: grid;
-  grid-template-columns: clamp(240px, 24vw, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(26px, 4vw, 72px);
+  gap: clamp(28px, 4vw, 72px);
   width: 100%;
-  margin: 0 auto;
-  padding: clamp(24px, 2.8vw, 44px);
+  padding: clamp(24px, 2.6vw, 40px);
   border-radius: var(--radius-lg);
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-
-.charity-card-media {
-  position: relative;
+  background: var(--ivory);
 }
 
 .charity-photo {
@@ -1010,58 +1005,40 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: var(--radius-md);
 }
 
-.charity-script {
-  position: absolute;
-  right: -14px;
-  top: -20px;
-  width: clamp(96px, 9vw, 124px);
-  height: auto;
-  pointer-events: none;
-}
-
 .charity-card-copy {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 18px;
+  padding: clamp(12px, 2vw, 32px) 0;
+  min-height: 100%;
+  justify-content: center;
 }
 
-.charity-card-copy .eyebrow {
-  margin-bottom: 8px;
-}
-
-.charity-figure {
-  display: flex;
-  align-items: baseline;
-  font-size: clamp(48px, 5vw, 72px);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  color: var(--aqua);
-}
-
-.charity-figure span {
-  font-size: 0.42em;
-  letter-spacing: -0.02em;
-  margin-left: 4px;
-}
-
-.charity-headline {
-  max-width: 620px;
-  font-size: var(--fs-lead);
-  font-weight: 500;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
-  color: var(--text-muted);
-}
-
-.charity-headline strong {
-  font-weight: 700;
+.charity-eyebrow {
   color: var(--ink);
 }
 
-.charity-card-copy .button {
-  margin-top: 8px;
+.charity-headline {
+  max-width: 460px;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.charity-headline strong {
+  font-weight: 800;
+}
+
+.charity-script {
+  align-self: flex-end;
+  width: clamp(120px, 13vw, 178px);
+  height: auto;
+  margin-top: clamp(20px, 3vw, 44px);
+  pointer-events: none;
 }
 
 @media (max-width: 760px) {
@@ -1069,13 +1046,14 @@ h1 em, h2 em, h3 em, dialog h2 em {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .charity-card-media {
-    max-width: 300px;
+  .charity-card-copy {
+    padding: 0 0 8px;
   }
-  .charity-card-copy .button {
-    width: 100%;
+  .charity-script {
+    align-self: flex-start;
   }
 }
+
 
 
 
