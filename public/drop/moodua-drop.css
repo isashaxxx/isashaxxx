@@ -674,7 +674,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .statement-points {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 2vw, 24px);
+  gap: clamp(12px, 1.6vw, 20px);
   max-width: 1200px;
   margin: clamp(48px, 6vw, 80px) auto 0;
   text-align: left;
@@ -683,90 +683,74 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .statement-point {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: clamp(24px, 2.6vw, 32px);
+  justify-content: space-between;
+  min-height: clamp(420px, 38vw, 560px);
+  padding: clamp(28px, 2.8vw, 40px);
   border-radius: var(--radius-lg);
   background: var(--mist);
 }
 
+.statement-point-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .statement-point h3 {
-  font-size: 17px;
+  font-size: clamp(22px, 2.2vw, 28px);
   font-weight: 800;
-  letter-spacing: -0.01em;
-  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  max-width: 220px;
+}
+
+.statement-index {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--aqua);
+  letter-spacing: 0.02em;
 }
 
 .statement-point p {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--text-muted);
 }
 
-.statement-point-accent {
-  background: var(--aqua);
-}
-
-.statement-point-accent h3,
-.statement-point-accent p {
-  color: #ffffff;
-}
-
-.statement-point-accent p {
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.statement-point-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(17, 17, 17, 0.1);
-  font-size: 13px;
+.statement-point p strong {
   font-weight: 700;
   color: var(--ink);
 }
 
-.statement-point-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #ffffff;
-  color: var(--ink);
-  transition: transform 0.2s var(--ease);
+.statement-point-accent {
+  background: var(--ink);
 }
 
-.statement-point-arrow svg {
-  width: 15px;
-  height: 15px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .statement-point-link:hover .statement-point-arrow {
-    transform: translate(2px, -2px);
-  }
-}
-
-.statement-point-accent .statement-point-link {
+.statement-point-accent h3 {
   color: #ffffff;
-  border-top-color: rgba(255, 255, 255, 0.25);
 }
 
-.statement-point-accent .statement-point-arrow {
-  background: #ffffff;
+.statement-point-accent .statement-index {
   color: var(--aqua);
+}
+
+.statement-point-accent p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.statement-point-accent p strong {
+  color: #ffffff;
 }
 
 @media (max-width: 760px) {
   .statement-points {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+  .statement-point {
+    min-height: 320px;
   }
 }
 
