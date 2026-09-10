@@ -643,22 +643,30 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .statement-text {
-  max-width: 1080px;
+  max-width: 980px;
   margin: 0 auto;
-  font-size: clamp(26px, 3.8vw, 54px);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
+  font-size: clamp(28px, 4.2vw, 60px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
   text-align: center;
 }
 
 .statement-word {
-  color: rgba(17, 17, 17, 0.18);
-  transition: color 0.5s var(--ease);
+  color: rgba(17, 17, 17, 0.16);
+  transition: color 0.6s var(--ease);
 }
 
 .statement-word.is-visible {
   color: #111111;
+}
+
+.statement-word-accent {
+  color: rgba(46, 180, 185, 0.3);
+}
+
+.statement-word-accent.is-visible {
+  color: var(--aqua);
 }
 
 .statement-points {
@@ -1102,8 +1110,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .product-picker {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(14px, 1.6vw, 22px);
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(10px, 1.2vw, 16px);
 }
 
 .picker-card {
@@ -1790,6 +1798,9 @@ dialog pre {
   }
   .hero-copy {
     max-width: 100%;
+  }
+  .product-picker {
+    grid-template-columns: repeat(3, 1fr);
   }
   .editor-grid {
     grid-template-columns: 1fr;

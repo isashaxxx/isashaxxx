@@ -365,11 +365,13 @@ summaryDialog.addEventListener('click', (event) => { if (event.target === summar
 
 const statementEl = root.querySelector('#statement-text');
 if (statementEl) {
+  const accentWords = new Set(['цінності', 'характер', 'бренду']);
   const words = statementEl.textContent.split(' ');
   statementEl.textContent = '';
   const wordEls = words.map((word, i) => {
     const span = document.createElement('span');
     span.className = 'statement-word';
+    if (accentWords.has(word.replace(/[.,—-]/g, '').toLowerCase())) span.classList.add('statement-word-accent');
     span.textContent = word;
     statementEl.append(span);
     if (i < words.length - 1) statementEl.append(' ');
