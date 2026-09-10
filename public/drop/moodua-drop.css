@@ -359,11 +359,13 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Video teaser placeholder */
 .video-teaser {
-  background: var(--surface);
+  background: var(--paper);
+  padding-bottom: clamp(26px, 3vw, 44px);
 }
 
 .statement-detail {
-  background: var(--surface);
+  background: var(--paper);
+  padding-top: clamp(26px, 3vw, 44px);
 }
 
 .video-teaser-frame {
@@ -753,7 +755,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .accordion-item {
-  background: var(--paper);
+  background: var(--surface);
   border: 1px solid transparent;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -761,7 +763,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .accordion-item.is-open {
-  background: var(--paper);
+  background: var(--surface);
   border-color: var(--line-dark);
 }
 
