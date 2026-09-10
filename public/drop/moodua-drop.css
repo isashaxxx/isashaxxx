@@ -25,6 +25,7 @@
   --mist-strong: #e6e6e6;
   --section-y: clamp(72px, 8vw, 120px);
   --section-x: clamp(20px, 5vw, 84px);
+  --content-max: 1372px;
   --heading-gap: clamp(36px, 4.5vw, 60px);
   --btn-h: 52px;
   --btn-h-sm: 44px;
@@ -164,6 +165,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   color: var(--aqua);
 }
 
+.builder-heading h2 em {
+  font-style: normal;
+}
+
 /* Buttons */
 .button {
   display: inline-flex;
@@ -255,7 +260,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 /* Sections Layout */
 .section {
   padding: var(--section-y) var(--section-x);
-  max-width: 1540px;
+  max-width: calc(var(--content-max) + var(--section-x) * 2);
   margin: 0 auto;
 }
 
@@ -370,7 +375,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .video-teaser-frame {
   position: relative;
-  max-width: 1180px;
+  max-width: var(--content-max);
   margin: 0 auto;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-lg);
@@ -438,7 +443,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   align-items: flex-end;
   margin-bottom: var(--heading-gap);
   gap: 24px;
-  max-width: 1540px;
+  max-width: calc(var(--content-max) + var(--section-x) * 2);
   margin-left: auto;
   margin-right: auto;
 }
@@ -750,7 +755,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 1200px;
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
@@ -1107,7 +1112,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .builder-shell {
   background: transparent;
-  max-width: 1400px;
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
