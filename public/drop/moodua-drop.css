@@ -940,29 +940,19 @@ h1 em, h2 em, h3 em, dialog h2 em {
   object-position: center 22%;
 }
 
-.charity-circle {
+.charity-swoosh {
   position: absolute;
-  top: 50%;
+  top: -15%;
   left: 44%;
-  height: 82%;
-  aspect-ratio: 1;
-  border-radius: 50%;
+  width: 22%;
+  height: 130%;
+  transform: translateX(-50%);
   z-index: 1;
-}
-
-.charity-circle-a {
-  transform: translate(-65%, -50%);
-  background: #00bdc1;
-}
-
-.charity-circle-b {
-  transform: translate(-35%, -50%);
-  background: rgba(255, 255, 255, 0.28);
+  display: block;
 }
 
 .charity-color {
   position: relative;
-  z-index: 2;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -973,10 +963,14 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .charity-label {
+  position: relative;
+  z-index: 3;
   color: rgba(255, 255, 255, 0.8);
 }
 
 .charity-headline {
+  position: relative;
+  z-index: 3;
   max-width: 480px;
   margin: 14px 0 0;
   font-size: clamp(26px, 2.9vw, 42px);
@@ -987,6 +981,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .charity-mark {
   position: absolute;
+  z-index: 3;
   right: clamp(24px, 4vw, 48px);
   bottom: clamp(20px, 3vw, 32px);
   display: inline-flex;
@@ -1012,7 +1007,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
     flex: none;
     height: 280px;
   }
-  .charity-circle {
+  .charity-swoosh {
     display: none;
   }
   .charity-color {
