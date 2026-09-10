@@ -1,7 +1,7 @@
 (function () {
   const scriptUrl = document.currentScript?.src || document.baseURI;
   const defaultBase = new URL('.', scriptUrl).href;
-  const buildVersion = '20260910-1245';
+  const buildVersion = '20260910-1330';
   const versionedUrl = (path, base) => {
     const url = new URL(path, base);
     url.searchParams.set('v', buildVersion);
@@ -32,12 +32,12 @@
           h1: 'Готова колекція мерчу, яку можна зробити своєю.',
           eyebrow: 'ЩО ЦЕ',
           intro: 'Ми спроєктували базові речі — футболки, худі, поло — і зібрали їх у Drop Collection. Обираєте вироби, налаштовуєте колір, матеріал і брендування під свою компанію — і отримуєте готову структуру дропу без розробки з нуля.',
-          stats: [['5', 'базових виробів'], ['4+', 'кольори на кожен'], ['20 шт.', 'мінімальний тираж']],
+          stats: [['6', 'базових виробів'], ['4+', 'кольори на кожен'], ['20 шт.', 'мінімальний тираж']],
           cta: 'Створити свою колекцію',
           schemaDescription: 'Корпоративний мерч і подарунки з логотипом під ключ: дизайн, брендування, виробництво та доставка.',
           sections: [
             { h2: 'Що таке MOODua Drop Collection?', p: 'Це готова колекція базового мерчу — футболки, худі, поло — яку можна кастомізувати під бренд вашої компанії: колір, матеріал, принт і брендування.' },
-            { h2: 'З яких виробів складається колекція?', p: 'Речі, з яких складається настрій: виварена футболка MINERAL, світшот BARREL, поло VELLURA, футболка з кишенею MANIFEST та худі з намистинами VERVIE.' },
+            { h2: 'З яких виробів складається колекція?', p: 'Речі, з яких складається настрій: виварена футболка MINERAL, світшот BARREL, поло VELLURA, футболка з кишенею MANIFEST, худі з намистинами VERVIE та адаптивний лонгслів CIPHER.' },
             { h2: 'Як налаштувати колір, крій і брендування?', p: 'Колір, крій, матеріал і брендовані деталі адаптуємо під стиль вашої компанії — оберіть варіант просто в конструкторі на цій сторінці.' }
           ],
           stepsHeading: 'Як створити свою колекцію?',
@@ -61,12 +61,12 @@
           h1: 'Готовая коллекция мерча, которую можно сделать своей.',
           eyebrow: 'ЧТО ЭТО',
           intro: 'Мы спроектировали базовые вещи — футболки, худи, поло — и собрали их в Drop Collection. Выбираете изделия, настраиваете цвет, материал и брендирование под свою компанию — и получаете готовую структуру дропа без разработки с нуля.',
-          stats: [['5', 'базовых изделий'], ['4+', 'цвета на каждое'], ['20 шт.', 'минимальный тираж']],
+          stats: [['6', 'базовых изделий'], ['4+', 'цвета на каждое'], ['20 шт.', 'минимальный тираж']],
           cta: 'Создать свою коллекцию',
           schemaDescription: 'Корпоративный мерч и подарки с логотипом под ключ: дизайн, брендирование, производство и доставка.',
           sections: [
             { h2: 'Что такое MOODua Drop Collection?', p: 'Это готовая коллекция базового мерча — футболки, худи, поло — которую можно кастомизировать под бренд вашей компании: цвет, материал, принт и брендирование.' },
-            { h2: 'Из каких изделий состоит коллекция?', p: 'Вещи, из которых складывается настроение: вываренная футболка MINERAL, свитшот BARREL, поло VELLURA, футболка с карманом MANIFEST и худи с бусинами VERVIE.' },
+            { h2: 'Из каких изделий состоит коллекция?', p: 'Вещи, из которых складывается настроение: вываренная футболка MINERAL, свитшот BARREL, поло VELLURA, футболка с карманом MANIFEST, худи с бусинами VERVIE и адаптивный лонгслив CIPHER.' },
             { h2: 'Как настроить цвет, крой и брендирование?', p: 'Цвет, крой, материал и брендированные детали адаптируем под стиль вашей компании — выберите вариант прямо в конструкторе на этой странице.' }
           ],
           stepsHeading: 'Как создать свою коллекцию?',
@@ -90,12 +90,12 @@
           h1: 'A ready-made merch collection you can make your own.',
           eyebrow: 'WHAT IS THIS',
           intro: 'We designed core pieces — t-shirts, hoodies, polos — and put them together in a Drop Collection. Choose products, set the color, material and branding for your company, and get a ready-made drop structure without building from scratch.',
-          stats: [['5', 'core products'], ['4+', 'colors each'], ['20 pcs', 'minimum run']],
+          stats: [['6', 'core products'], ['4+', 'colors each'], ['20 pcs', 'minimum run']],
           cta: 'Build your collection',
           schemaDescription: 'Corporate merch and branded gifts, done for you: design, branding, production and delivery.',
           sections: [
             { h2: 'What is MOODua Drop Collection?', p: 'A ready-made collection of core merch — t-shirts, hoodies, polos — that you can customize for your brand: color, material, print and branding.' },
-            { h2: 'What products are in the collection?', p: 'Items that shape the mood: the MINERAL washed tee, BARREL sweatshirt, VELLURA polo, MANIFEST pocket tee and VERVIE beaded hoodie.' },
+            { h2: 'What products are in the collection?', p: 'Items that shape the mood: the MINERAL washed tee, BARREL sweatshirt, VELLURA polo, MANIFEST pocket tee, VERVIE beaded hoodie and CIPHER adaptive longsleeve.' },
             { h2: 'How do I customize color, cut and branding?', p: 'Color, cut, material and branded details are adapted to your company’s style — just pick an option in the configurator on this page.' }
           ],
           stepsHeading: 'How to build your own collection?',

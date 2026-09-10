@@ -11,6 +11,13 @@
       materials: ['Щільна двонитка 220-240 г/м²', 'Organic cotton 220 г'],
       branding: ['Нашивка з напівпанами', 'Кольорове виварювання', 'Необроблений край']
     },
+    longsleeve: {
+      name: 'Адаптивний лонгслів Move fast', code: 'CIPHER', image: 'assets/drop/cutouts/cipher.webp',
+      photo: 'assets/drop/constructor/cipher.webp',
+      colors: [{ name: 'Мʼята', hex: '#9fd9d2' }, { name: 'Графіт', hex: '#263b59' }, { name: 'Молочний', hex: '#e9e4d9' }],
+      materials: ['Бавовна 220 г', 'Бавовна з еластаном'],
+      branding: ['3D-вишивка', 'Екошкіра', 'Шовкодрук']
+    },
     pocketTee: {
       name: 'Футболка Curiosity', code: 'MANIFEST', image: 'assets/drop/cutouts/manifest.webp',
       photo: 'assets/drop/constructor/manifest.webp',

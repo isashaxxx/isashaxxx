@@ -394,15 +394,8 @@ if (statementEl) {
   }
 }
 
-const newsletterForm = root.querySelector('#newsletter-form');
-newsletterForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  root.querySelector('#newsletter-note').hidden = false;
-  newsletterForm.reset();
-});
-
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); } }), { threshold: .12 });
-root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.charity-card').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
+root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.charity-panel').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
 
 root.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListener('click', (event) => {
   const target = root.querySelector(link.getAttribute('href'));
