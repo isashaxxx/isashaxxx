@@ -526,7 +526,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   flex-direction: column;
   gap: 14px;
   padding: 10px;
-  background: var(--mist);
+  background: var(--paper);
   border: none;
   border-radius: var(--radius-lg);
   scroll-snap-align: start;
@@ -536,7 +536,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 .product-card-media {
   position: relative;
   aspect-ratio: 3 / 4;
-  background: var(--line);
+  background: var(--mist);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
@@ -551,7 +551,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 @media (hover: hover) and (pointer: fine) {
   .product-card:hover {
-    background: var(--line);
+    background: var(--mist);
   }
   .product-card:hover .product-card-media img {
     transform: scale(1.04);
@@ -667,7 +667,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 2px 8px 10px;
+  padding: 4px 10px 12px;
+  text-align: center;
 }
 
 .product-card-info h3 {
