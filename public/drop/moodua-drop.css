@@ -198,7 +198,8 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .button-pillcta {
-  padding: 6px 28px 6px 6px;
+  padding: 6px;
+  gap: 0;
 }
 
 .button-pillcta-icon {
@@ -210,11 +211,50 @@ h1 em, h2 em, h3 em, dialog h2 em {
   border-radius: var(--radius-md);
   background: var(--aqua);
   flex-shrink: 0;
-  transition: background-color 0.22s var(--ease);
+  overflow: hidden;
+  transition: width 0.34s var(--ease), opacity 0.22s var(--ease), background-color 0.22s var(--ease);
 }
 
 .button-pillcta-icon .material-icon {
   filter: none;
+}
+
+.button-pillcta-label {
+  padding: 0 22px;
+  transition: padding 0.34s var(--ease);
+}
+
+.button-pillcta-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: width 0.34s var(--ease), opacity 0.22s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button-pillcta:hover:not(:disabled) {
+    background: var(--aqua);
+    color: var(--ink);
+  }
+  .button-pillcta:hover:not(:disabled) .button-pillcta-icon {
+    width: 0;
+    opacity: 0;
+  }
+  .button-pillcta:hover:not(:disabled) .button-pillcta-label {
+    padding: 0 12px 0 22px;
+  }
+  .button-pillcta:hover:not(:disabled) .button-pillcta-arrow {
+    width: 17px;
+    opacity: 1;
+    margin-right: 16px;
+  }
+  .button-pillcta:hover:not(:disabled) .button-pillcta-arrow .material-icon {
+    filter: none;
+  }
 }
 
 /* Sections Layout */
