@@ -745,8 +745,30 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .accordion-item.is-open {
+  background: var(--aqua);
   border-color: transparent;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 16px 34px -14px rgba(46, 180, 185, 0.5);
+}
+
+.accordion-item.is-open .accordion-index {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.accordion-item.is-open .accordion-title {
+  color: var(--surface);
+}
+
+.accordion-item.is-open .accordion-icon::before,
+.accordion-item.is-open .accordion-icon::after {
+  background: var(--surface);
+}
+
+.accordion-item.is-open .accordion-panel p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.accordion-item.is-open .accordion-panel p strong {
+  color: var(--surface);
 }
 
 .accordion-head {
@@ -853,7 +875,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .accordion-head:hover .accordion-title {
+  .accordion-item:not(.is-open) .accordion-head:hover .accordion-title {
     color: var(--aqua);
   }
 }
