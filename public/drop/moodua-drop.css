@@ -526,17 +526,17 @@ h1 em, h2 em, h3 em, dialog h2 em {
   flex-direction: column;
   gap: 14px;
   padding: 10px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--mist);
+  border: none;
   border-radius: var(--radius-lg);
   scroll-snap-align: start;
-  transition: border-color 0.25s var(--ease);
+  transition: background-color 0.25s var(--ease);
 }
 
 .product-card-media {
   position: relative;
   aspect-ratio: 3 / 4;
-  background: var(--mist);
+  background: var(--line);
   border-radius: var(--radius-md);
   overflow: hidden;
 }
@@ -551,7 +551,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 @media (hover: hover) and (pointer: fine) {
   .product-card:hover {
-    border-color: var(--line-dark);
+    background: var(--line);
   }
   .product-card:hover .product-card-media img {
     transform: scale(1.04);
