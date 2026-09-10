@@ -87,6 +87,7 @@ Object.entries(PRODUCTS).forEach(([id, product]) => {
   button.className = 'picker-card'; button.dataset.product = id;
   button.innerHTML = `<span class="picker-card-media"><img src="${assetPath(product.photo || product.image)}" alt=""><span class="picker-card-overlay"><span class="picker-card-remove">Обрати</span></span></span><strong>${product.name}</strong>`;
   button.addEventListener('click', () => {
+    if (pointerDragged) return;
     const existing = items.find((item) => item.productId === id);
     if (existing) removeItemById(existing.id);
     else addProductToCollection(id);
@@ -138,8 +139,17 @@ function clearCollection() {
   renderCollection();
 }
 
+let pointerStart = null;
+let pointerDragged = false;
+root.addEventListener('pointerdown', (event) => { pointerStart = { x: event.clientX, y: event.clientY }; pointerDragged = false; }, true);
+root.addEventListener('pointermove', (event) => {
+  if (!pointerStart) return;
+  if (Math.abs(event.clientX - pointerStart.x) > 8 || Math.abs(event.clientY - pointerStart.y) > 8) pointerDragged = true;
+}, true);
+
 catalogTrack.querySelectorAll('.catalog-select').forEach((button) => button.addEventListener('click', (event) => {
   event.stopPropagation();
+  if (pointerDragged) return;
   const productId = button.closest('.product-card').dataset.product;
   const existing = items.find((item) => item.productId === productId);
   if (existing) {

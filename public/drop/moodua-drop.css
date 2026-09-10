@@ -458,7 +458,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
   gap: 20px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
   padding: 10px var(--section-x) 36px;
   scroll-padding-left: var(--section-x);
   scroll-padding-right: var(--section-x);
