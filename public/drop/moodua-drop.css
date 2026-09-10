@@ -221,7 +221,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .button:disabled {
   opacity: 0.4;
-  cursor: not-allowed;
   transform: none !important;
 }
 
@@ -965,7 +964,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .builder-step:disabled {
   opacity: 0.45;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -984,7 +983,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Charity */
 .charity {
-  background: var(--surface);
+  background: var(--paper);
 }
 
 .charity-card {
@@ -995,7 +994,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
   width: 100%;
   padding: clamp(20px, 2.2vw, 32px);
   border-radius: var(--radius-lg);
-  background: var(--ivory);
+  background: linear-gradient(135deg, #e9f6f6 0%, #fdfaec 100%);
 }
 
 .charity-photo {
@@ -1061,7 +1060,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 /* Section 03 · YOUR COLLECTION (Builder) */
 .builder-section {
-  background: var(--surface);
+  background: var(--paper);
   padding-bottom: var(--section-y);
 }
 
@@ -1288,6 +1287,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
   font-weight: 700;
   color: var(--ink);
   letter-spacing: -0.015em;
+}
+
+.picker-footer[hidden] {
+  display: none;
 }
 
 .picker-footer {

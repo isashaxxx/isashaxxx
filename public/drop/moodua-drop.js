@@ -46,6 +46,7 @@ root.querySelector('#catalog-prev').addEventListener('click', () => scrollCatalo
 const picker = root.querySelector('#product-picker');
 const selectionCount = root.querySelector('#selection-count');
 const startButton = root.querySelector('#start-config');
+const pickerFooter = root.querySelector('#picker-footer');
 const pickerPanel = root.querySelector('#builder-picker');
 const editorPanel = root.querySelector('#builder-editor');
 let items = [];
@@ -68,6 +69,7 @@ function syncSelectionUI() {
   });
   const count = items.length;
   selectionCount.textContent = count ? `Обрано: ${count}` : 'Нічого не обрано';
+  pickerFooter.hidden = count === 0;
   startButton.disabled = count === 0;
   root.querySelector('#step-editor').disabled = count === 0;
   root.querySelector('#step-results').disabled = count === 0;
