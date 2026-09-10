@@ -398,7 +398,14 @@ if (statementEl) {
 }
 
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); } }), { threshold: .12 });
-root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.charity-panel').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
+root.querySelectorAll('.statement-points,.faq-list,.catalog-track').forEach((group) => {
+  [...group.children].forEach((child, index) => child.style.setProperty('--reveal-i', Math.min(index, 5)));
+});
+root.querySelectorAll('.section-heading,.catalog-heading,.builder-heading,.faq-heading,.video-teaser-frame,.statement-card,.product-card,.builder-shell,.faq-item,.charity-media,.charity-info,.final-cta-copy').forEach((element) => { element.classList.add('reveal'); revealObserver.observe(element); });
+setTimeout(() => root.querySelectorAll('.reveal:not(.in)').forEach((element) => {
+  const box = element.getBoundingClientRect();
+  if (box.top < window.innerHeight && box.bottom > 0) element.classList.add('in');
+}), 2500);
 
 root.querySelectorAll('a[href^="#"]').forEach((link) => link.addEventListener('click', (event) => {
   const target = root.querySelector(link.getAttribute('href'));
