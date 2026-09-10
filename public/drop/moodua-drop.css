@@ -870,39 +870,6 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 
-/* Closing CTA */
-.final-cta {
-  background: var(--surface);
-  padding: clamp(72px, 8vw, 112px) var(--section-x);
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  border-top: 1px solid var(--line);
-}
-
-.final-cta-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  max-width: 680px;
-}
-
-.final-cta-eyebrow {
-  color: var(--text-muted);
-}
-
-.final-cta-copy h2 {
-  font-size: clamp(28px, 3.4vw, 48px);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-
-.final-cta-copy .button {
-  margin-top: 8px;
-}
-
 /* Builder step tabs */
 .builder-steps {
   display: flex;
@@ -987,12 +954,12 @@ h1 em, h2 em, h3 em, dialog h2 em {
 
 .charity-card {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
+  grid-template-columns: clamp(240px, 24vw, 340px) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(26px, 3.5vw, 56px);
-  max-width: 960px;
+  gap: clamp(26px, 4vw, 72px);
+  width: 100%;
   margin: 0 auto;
-  padding: clamp(24px, 2.6vw, 36px);
+  padding: clamp(24px, 2.8vw, 44px);
   border-radius: var(--radius-lg);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1049,7 +1016,7 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .charity-headline {
-  max-width: 440px;
+  max-width: 620px;
   font-size: var(--fs-lead);
   font-weight: 500;
   line-height: 1.45;
@@ -1104,10 +1071,10 @@ h1 em, h2 em, h3 em, dialog h2 em {
 }
 
 .builder-subtitle {
-  max-width: 560px;
+  max-width: 680px;
   margin: 0 auto clamp(28px, 3.5vw, 44px);
   text-align: center;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-lead);
   line-height: 1.6;
   color: var(--text-muted);
 }
